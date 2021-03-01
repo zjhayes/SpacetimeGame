@@ -27,6 +27,11 @@ public class PlayerManager : MonoBehaviour
         return Vector3.Distance(player.transform.position, other.transform.position);
     }
 
+    public GameObject Player
+    {
+        get { return player; }
+    }
+
     public float PlayerClock
     {
         get

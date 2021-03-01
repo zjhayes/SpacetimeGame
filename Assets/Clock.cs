@@ -16,7 +16,7 @@ public class Clock : MonoBehaviour
     {
         get
         {
-            return PlayerManager.instance.PlayerClock * distanceFromMass;
+            return centerOfMass.GetComponent<Mass>().DistanceRelativeToPlayer(gameObject);
         }
     }
 

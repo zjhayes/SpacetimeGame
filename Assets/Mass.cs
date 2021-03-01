@@ -20,11 +20,6 @@ public class Mass : MonoBehaviour
         {
             moons.Add(other.gameObject);
         }
-
-        if(other.gameObject.GetComponent<Clock>())
-        {
-            clocks.Add(other.gameObject);
-        }
     }
 
     void OnTriggerExit(Collider other)
@@ -34,12 +29,6 @@ public class Mass : MonoBehaviour
             other.GetComponent<Rigidbody>().useGravity = true;
             moons.Remove(other.gameObject);
         }
-
-        // if(clocks.Contains(other.gameObject))
-        // {
-        //     other.GetComponent<Clock>().DistanceFromMass = 1;
-        //     clocks.Remove(other.gameObject);
-        // }
     }
 
     void Update()
@@ -61,5 +50,13 @@ public class Mass : MonoBehaviour
             float distance = Vector3.Distance(this.transform.position, clock.transform.position);
             clock.GetComponent<Clock>().DistanceFromMass = (distance);
         }
+    }
+
+    public float DistanceRelativeToPlayer(GameObject other)
+    {
+        float distanceToObject = Vector3.Distance(this.transform.position, other.transform.position);
+        float distanceToPlayer = Vector3.Distance(this.transform.position, PlayerManager.instance.Player.transform.position);
+
+        return distanceToObject / distanceToPlayer;
     }
 }

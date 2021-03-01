@@ -40,7 +40,7 @@ public class PlayerInteraction : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown("f"))
+        if(Input.GetKeyDown("g"))
         {
             if(isHolding)
             {
