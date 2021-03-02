@@ -16,7 +16,6 @@ public class ClockController : MonoBehaviour
     {
         Quaternion currentRotation = transform.rotation;
         float timeRelativeToPlayer = clock.TimeRelativeToPlayer;
-        Debug.Log(timeRelativeToPlayer);
         transform.rotation = currentRotation * Quaternion.Euler(0, timeRelativeToPlayer, 0);
     }
 }
