@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7104269900366158055}
   - component: {fileID: 7104269900366158054}
   - component: {fileID: 7104269900366158059}
+  - component: {fileID: 3368931295635101738}
   m_Layer: 0
   m_Name: ClockBox
   m_TagString: Pickup
@@ -125,6 +126,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isHolding: 0
+--- !u!114 &3368931295635101738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7104269900366158053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b99dfb0929349454e8e9aa537898c7de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8576188792077110159
 PrefabInstance:
   m_ObjectHideFlags: 0

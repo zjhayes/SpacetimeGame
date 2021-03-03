@@ -5,58 +5,34 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class Mass : MonoBehaviour
 {
-    List<GameObject> moons;
-    List<GameObject> clocks;
+    [SerializeField]
+    float gravityRadius = 4.0f;
+    GameObject centerOfMass;
 
     void Start()
     {
-        moons = new List<GameObject>();
-        clocks = new List<GameObject>();
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.GetComponent<Pickup>())
-        {
-            moons.Add(other.gameObject);
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if(moons.Contains(other.gameObject))
-        {
-            other.GetComponent<Rigidbody>().useGravity = true;
-            moons.Remove(other.gameObject);
-        }
+        centerOfMass = MassManager.instance.CenterOfMass;
     }
 
     void Update()
     {
-        foreach(GameObject moon in moons)
+        float distance = Vector3.Distance(centerOfMass.transform.position, gameObject.transform.position);
+
+        // Disable gravity if within gravityRadius.
+        if(distance <= gravityRadius)
         {
-            moon.GetComponent<Rigidbody>().useGravity = false;
-            float distance = Vector3.Distance(this.transform.position, moon.transform.position);             
-            float rotationSpeedDegrees = (1 / distance) * 360; // degrees per second.
-            Vector3 desiredDirection = (this.transform.position - moon.transform.position).normalized;
-            Vector3 newVelocity = Vector3.RotateTowards(moon.GetComponent<Rigidbody>().velocity, desiredDirection,
-                rotationSpeedDegrees * Time.deltaTime * Mathf.Deg2Rad, 0 );
-
-            moon.GetComponent<Rigidbody>().velocity = newVelocity;
+            gameObject.GetComponent<Rigidbody>().useGravity = false;
         }
-
-        foreach(GameObject clock in clocks)
+        else if(!gameObject.GetComponent<Pickup>().IsHolding) // enable gravity if user isn't holding object.
         {
-            float distance = Vector3.Distance(this.transform.position, clock.transform.position);
-            clock.GetComponent<Clock>().DistanceFromMass = (distance);
+            gameObject.GetComponent<Rigidbody>().useGravity = true;
         }
-    }
+        
+        float rotationSpeedDegrees = (1 / distance) * 360; // degrees per second.
+        Vector3 desiredDirection = (centerOfMass.transform.position - gameObject.transform.position).normalized;
+        Vector3 newVelocity = Vector3.RotateTowards(gameObject.GetComponent<Rigidbody>().velocity, desiredDirection,
+            rotationSpeedDegrees * Time.deltaTime * Mathf.Deg2Rad, 0);
 
-    public float DistanceRelativeToPlayer(GameObject other)
-    {
-        float distanceToObject = Vector3.Distance(this.transform.position, other.transform.position);
-        float distanceToPlayer = Vector3.Distance(this.transform.position, PlayerManager.instance.Player.transform.position);
-
-        return distanceToObject / distanceToPlayer;
+        gameObject.GetComponent<Rigidbody>().velocity = newVelocity;
     }
 }

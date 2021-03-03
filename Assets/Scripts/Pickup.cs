@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Pickup : MonoBehaviour
 {
-    public bool isHolding = false;
+    bool isHolding = false;
     GameObject currentLoad;
     Vector3 objectPosition;
 
@@ -17,6 +17,11 @@ public class Pickup : MonoBehaviour
             this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
             this.transform.parent=currentLoad.transform;
         }
+    }
+
+    public bool IsHolding
+    {
+        get{ return isHolding; }
     }
 
     public void PickUp(GameObject load)

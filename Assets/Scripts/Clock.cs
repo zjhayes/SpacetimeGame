@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Clock : MonoBehaviour
 {
-    float distanceFromMass = 1;
     private GameObject centerOfMass;
 
     void Start()
@@ -16,13 +15,7 @@ public class Clock : MonoBehaviour
     {
         get
         {
-            return centerOfMass.GetComponent<Mass>().DistanceRelativeToPlayer(gameObject);
+            return centerOfMass.GetComponent<CenterOfMass>().DistanceRelativeToPlayer(gameObject);
         }
-    }
-
-    public float DistanceFromMass
-    {
-        get { return distanceFromMass; }
-        set { distanceFromMass = value; }
     }
 }
