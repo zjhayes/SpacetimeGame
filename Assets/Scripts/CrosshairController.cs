@@ -6,26 +6,35 @@ using UnityEngine.UI;
 public class CrosshairController : MonoBehaviour
 {
     [SerializeField]
-    float maxDistance = 500.0f;
-    [SerializeField]
     Color32 defaultColor;
     [SerializeField]
     Color32 hoverColor;
     [SerializeField]
     Camera fpsCamera;
+    [SerializeField]
+    GameObject load;
+
+    PlayerInteraction interact;
+
+    void Start()
+    {
+        interact = PlayerManager.instance.Player.GetComponent<PlayerInteraction>();
+    }
     
     void Update()
     {
-        GameObject currentTarget = PlayerManager.instance.Player.GetComponent<PlayerInteraction>().CurrentHit;
+        GameObject currentTarget = interact.CurrentHit;
 
-        bool isHovering = false;
+        bool isHoveringPickup = false;
 
-        if(currentTarget != null && currentTarget.GetComponent<Pickup>())
+        // If aiming at object, if it's close enough to pick up...
+        if(currentTarget != null && currentTarget.GetComponent<Pickup>() && !load.GetComponent<LoadManager>().PickupTooFar(currentTarget))
         {
-            isHovering = true;
+            isHoveringPickup = true;
         }
 
-        if(isHovering)
+        // Set color of crosshair.
+        if(isHoveringPickup)
         {
             GetComponent<Image>().color = hoverColor;
         }

@@ -693,6 +693,7 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4284152575
   fpsCamera: {fileID: 963194227}
+  load: {fileID: 1765692456}
 --- !u!1 &1255247746
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,6 +741,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1495317778}
+  reach: 1
 --- !u!114 &1255247749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1426,7 +1428,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   throwForce: 600
   dropForce: 50
-  maxHoldDistance: 1
 --- !u!1 &1804738806
 GameObject:
   m_ObjectHideFlags: 0

@@ -80,11 +80,8 @@ public class PlayerMovement : MonoBehaviour
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, xCameraRotation * lookSpeed, 0);
-        } //Mouse.current.delta.x.ReadValue()
+        }
 
-        // Reset
-        // moveVerticle = 0.0f;
-        // moveHorizontal = 0.0f;
         isJumping = false;
     }
 

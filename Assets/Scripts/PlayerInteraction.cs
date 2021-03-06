@@ -55,9 +55,9 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    public float DistanceToHit(GameObject compare)
+    public float DistanceToHit()
     {
-        float distance = Vector3.Distance(compare.transform.position, transform.position);
+        float distance = Vector3.Distance(currentHit.transform.position, transform.position);
         return distance;
     }
 }

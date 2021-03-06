@@ -20,6 +20,10 @@ public class PlayerManager : MonoBehaviour
 
     [SerializeField]
     private GameObject player;
+    [SerializeField]
+    private float reach = 1.0f;
+    [SerializeField]
+    private GameObject load;
     private float playerClock = 60;
 
     public float DistanceFrom(GameObject other)
@@ -30,6 +34,11 @@ public class PlayerManager : MonoBehaviour
     public GameObject Player
     {
         get { return player; }
+    }
+
+    public float Reach
+    {
+        get { return reach; }
     }
 
     public float PlayerClock

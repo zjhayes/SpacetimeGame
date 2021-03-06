@@ -8,11 +8,8 @@ public class LoadManager : MonoBehaviour
     float throwForce = 600.0f;
     [SerializeField]
     float dropForce = 50.0f;
-    [SerializeField]
-    float maxHoldDistance = 1.0f;
 
     GameObject currentPickup;
-    bool isHolding = false;
 
     void Start()
     {
@@ -23,7 +20,7 @@ public class LoadManager : MonoBehaviour
     void Update()
     {
         // Drop item if it's out of range.
-        if(isHolding)
+        if(HasLoad())
         {
             if(PickupTooFar())
             {
@@ -34,7 +31,7 @@ public class LoadManager : MonoBehaviour
 
     void OnInteract()
     {
-        if(!isHolding)
+        if(!HasLoad())
         {
             // Check if object being aimed at can be picked up.
             GameObject objectInView = PlayerManager.instance.Player.GetComponent<PlayerInteraction>().CurrentHit;
@@ -52,30 +49,45 @@ public class LoadManager : MonoBehaviour
     void PickUp(GameObject objectInView)
     {
         currentPickup = objectInView;
-        currentPickup.GetComponent<Pickup>().PickUp(gameObject);      
-        isHolding = true;
+        currentPickup.GetComponent<Pickup>().PickUp(gameObject);
     }
 
     void PutDown()
     {
         currentPickup.GetComponent<Pickup>().Throw(gameObject, dropForce);
         currentPickup = null;
-        isHolding = false;
     }
 
     void Throw()
     {
-        if(isHolding)
+        if(HasLoad())
         {
             currentPickup.GetComponent<Pickup>().Throw(gameObject, throwForce);
             currentPickup = null;
-            isHolding = false;
         }
     }
 
     bool PickupTooFar()
     {
-        float distance = Vector3.Distance(currentPickup.transform.position, transform.position);
-        return distance > maxHoldDistance;
+        return PickupTooFar(currentPickup);
+    }
+
+    public bool PickupTooFar(GameObject compare)
+    {
+        return DistanceToLoad(compare) > PlayerManager.instance.Reach;
+    }
+
+    float DistanceToLoad(GameObject compare)
+    {
+        return Vector3.Distance(compare.transform.position, transform.position);
+    }
+
+    bool HasLoad()
+    {
+        if(currentPickup == null || !currentPickup.GetComponent<Pickup>().IsHolding)
+        {
+            return false;
+        }
+        return true;
     }
 }
