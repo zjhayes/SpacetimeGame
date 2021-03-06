@@ -15,7 +15,6 @@ public class Pickup : MonoBehaviour
         {
             this.GetComponent<Rigidbody>().velocity = Vector3.zero;
             this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-            this.transform.parent=currentLoad.transform;
         }
     }
 
@@ -27,8 +26,7 @@ public class Pickup : MonoBehaviour
     public void PickUp(GameObject load)
     {
         currentLoad = load;
-        //this.transform.parent=currentLoad.transform;
-        //this.transform.position=currentLoad.transform.position-transform.forward;
+        this.transform.parent=currentLoad.transform;
         this.GetComponent<Rigidbody>().useGravity = false;
         this.GetComponent<Rigidbody>().detectCollisions = true;
 
@@ -41,6 +39,7 @@ public class Pickup : MonoBehaviour
         this.transform.SetParent(null);
         this.GetComponent<Rigidbody>().useGravity = true;
         this.transform.position = objectPosition;
+        currentLoad = null;
 
         isHolding = false;
     }

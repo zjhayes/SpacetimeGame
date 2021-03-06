@@ -7,93 +7,57 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField]
     Camera fpsCamera;
     [SerializeField]
-    GameObject playerLoad;
-    [SerializeField]
     float maxDistance = 500.0f;
-    [SerializeField]
-    float throwForce = 600.0f;
-    [SerializeField]
-    float maxHoldDistance = 1.0f;
 
-    GameObject currentPickup;
-    bool isHolding;
-    bool interact = false;
-    bool firing = false;
-    bool inRange = false;
+    GameObject currentHit;
+
+    public delegate void OnInteract();
+    public OnInteract onInteract;
+
+    public delegate void OnFire();
+    public OnFire onFire;
 
     void Start()
     {
-        InputManager.instance.Controls.Player.Interact.performed += ctx => OnInteract();
-        InputManager.instance.Controls.Player.Fire.started += ctx => OnFire();
+        InputManager.instance.Controls.Player.Interact.performed += ctx => Interact();
+        InputManager.instance.Controls.Player.Fire.started += ctx => Fire();
     }
 
     void Update()
     {
-        inRange = false;
-
         var ray = new Ray(fpsCamera.transform.position, fpsCamera.transform.forward);
         RaycastHit hit = new RaycastHit();
 
-        if(!isHolding && Physics.Raycast(ray, out hit, maxDistance))
+        if(Physics.Raycast(ray, out hit, maxDistance))
         {
-            currentPickup=hit.collider.gameObject; 
-            if(!PickupTooFar() && currentPickup.GetComponent<Pickup>()) 
-            {
-                inRange = true;
-            }
-        }
-
-        // Drop item if it's out of range.
-        if(isHolding)
-        {
-            if(PickupTooFar())
-            {
-                PutDown();
-            }
+            currentHit=hit.collider.gameObject;
         }
     }
 
-    void OnInteract()
+    public GameObject CurrentHit
     {
-        if(!isHolding)
+        get{ return currentHit; }
+    }
+
+    void Interact()
+    {
+        if(onInteract != null)
         {
-            if(inRange)
-            {
-                currentPickup.GetComponent<Pickup>().PickUp(playerLoad);      
-                isHolding = true;
-            }
-        }
-        else
-        {
-            PutDown();
+            onInteract.Invoke();
         }
     }
 
-    void OnFire()
+    void Fire()
     {
-        if(isHolding)
+        if(onFire != null)
         {
-            Throw();
+            onFire.Invoke();
         }
     }
 
-    void PutDown()
+    public float DistanceToHit(GameObject compare)
     {
-        currentPickup.GetComponent<Pickup>().PutDown();
-        currentPickup = null;
-        isHolding = false;
-    }
-
-    void Throw()
-    {
-        currentPickup.GetComponent<Pickup>().Throw(playerLoad, throwForce);
-        currentPickup = null;
-        isHolding = false;
-    }
-
-    bool PickupTooFar()
-    {
-        float distance = Vector3.Distance(currentPickup.transform.position, playerLoad.transform.position);
-        return distance > maxHoldDistance;
+        float distance = Vector3.Distance(compare.transform.position, transform.position);
+        return distance;
     }
 }

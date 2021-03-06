@@ -16,17 +16,13 @@ public class CrosshairController : MonoBehaviour
     
     void Update()
     {
-        var ray = new Ray(fpsCamera.transform.position, fpsCamera.transform.forward);
-        RaycastHit hit = new RaycastHit();
+        GameObject currentTarget = PlayerManager.instance.Player.GetComponent<PlayerInteraction>().CurrentHit;
 
         bool isHovering = false;
 
-        if(Physics.Raycast(ray, out hit, maxDistance))
-        {   
-            if(hit.collider.gameObject.GetComponent<Pickup>())
-            {
-                isHovering = true;
-            }
+        if(currentTarget != null && currentTarget.GetComponent<Pickup>())
+        {
+            isHovering = true;
         }
 
         if(isHovering)

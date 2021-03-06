@@ -1069,10 +1069,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fpsCamera: {fileID: 963194227}
-  playerLoad: {fileID: 1765692456}
   maxDistance: 1000
-  throwForce: 600
-  maxHoldDistance: 1
 --- !u!1 &1499407849
 GameObject:
   m_ObjectHideFlags: 0
@@ -1393,6 +1390,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1765692457}
+  - component: {fileID: 1765692458}
   m_Layer: 0
   m_Name: PlayerLoad
   m_TagString: Untagged
@@ -1414,6 +1412,21 @@ Transform:
   m_Father: {fileID: 963194228}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1765692458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1765692456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d029cbb7fda1457cb2be2b8ea84a559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  throwForce: 600
+  dropForce: 50
+  maxHoldDistance: 1
 --- !u!1 &1804738806
 GameObject:
   m_ObjectHideFlags: 0
