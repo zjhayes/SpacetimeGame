@@ -17,9 +17,33 @@ public class PlayerInteraction : MonoBehaviour
 
     GameObject currentPickup;
     bool isHolding;
+    bool interact = false;
+    bool firing = false;
+    bool inRange = false;
+
+    void Start()
+    {
+        InputManager.instance.Controls.Player.Interact.performed += ctx => OnInteract();
+        InputManager.instance.Controls.Player.Fire.started += ctx => OnFire();
+    }
 
     void Update()
     {
+        inRange = false;
+
+        var ray = new Ray(fpsCamera.transform.position, fpsCamera.transform.forward);
+        RaycastHit hit = new RaycastHit();
+
+        if(!isHolding && Physics.Raycast(ray, out hit, maxDistance))
+        {
+            currentPickup=hit.collider.gameObject; 
+            if(!PickupTooFar() && currentPickup.GetComponent<Pickup>()) 
+            {
+                inRange = true;
+            }
+        }
+
+        // Drop item if it's out of range.
         if(isHolding)
         {
             if(PickupTooFar())
@@ -27,44 +51,29 @@ public class PlayerInteraction : MonoBehaviour
                 PutDown();
             }
         }
+    }
 
-        if (Input.GetKeyDown("e"))
+    void OnInteract()
+    {
+        if(!isHolding)
         {
-            if(!isHolding)
+            if(inRange)
             {
-                PickUp();
-            }
-            else
-            {
-                PutDown();
+                currentPickup.GetComponent<Pickup>().PickUp(playerLoad);      
+                isHolding = true;
             }
         }
-
-        if(Input.GetKeyDown("g"))
+        else
         {
-            if(isHolding)
-            {
-                Throw();
-            }
+            PutDown();
         }
     }
 
-    void PickUp()
+    void OnFire()
     {
-        var ray = new Ray(fpsCamera.transform.position, fpsCamera.transform.forward);
-        RaycastHit hit = new RaycastHit();
-
-        if(Physics.Raycast(ray, out hit, maxDistance))
+        if(isHolding)
         {
-            currentPickup=hit.collider.gameObject; 
-            if(!PickupTooFar()) 
-            {
-                if(currentPickup.GetComponent<Pickup>())
-                {
-                    currentPickup.GetComponent<Pickup>().PickUp(playerLoad);      
-                    isHolding = true;
-                }
-            }
+            Throw();
         }
     }
 

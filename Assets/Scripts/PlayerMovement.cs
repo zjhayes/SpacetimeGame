@@ -14,15 +14,25 @@ public class PlayerMovement : MonoBehaviour
     public float lookXLimit = 45.0f;
 
     CharacterController characterController;
+    float moveVerticle = 0.0f;
+    float moveHorizontal = 0.0f;
     Vector3 moveDirection = Vector3.zero;
     float rotationX = 0;
 
     [HideInInspector]
     public bool canMove = true;
+    
+    bool isJumping = false;
+    bool isRunning = false;
 
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+
+        InputManager.instance.Controls.Player.Move.performed+= ctx => Move(ctx.ReadValue<Vector2>());
+        InputManager.instance.Controls.Player.Move.canceled += ctx => Stop();
+        InputManager.instance.Controls.Player.Jump.performed += ctx => OnJump();
+        InputManager.instance.Controls.Player.Run.performed += ctx => ToggleRun();
 
         // Lock cursor
         Cursor.lockState = CursorLockMode.Locked;
@@ -35,13 +45,12 @@ public class PlayerMovement : MonoBehaviour
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
         // Press Left Shift to run
-        bool isRunning = Input.GetKey(KeyCode.LeftShift);
-        float curSpeedX = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Vertical") : 0;
-        float curSpeedY = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Horizontal") : 0;
+        float curSpeedX = canMove ? (isRunning ? runningSpeed : walkingSpeed) * moveVerticle : 0;
+        float curSpeedY = canMove ? (isRunning ? runningSpeed : walkingSpeed) * moveHorizontal : 0;
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-        if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
+        if (isJumping && canMove && characterController.isGrounded)
         {
             moveDirection.y = jumpSpeed;
         }
@@ -62,12 +71,42 @@ public class PlayerMovement : MonoBehaviour
         characterController.Move(moveDirection * Time.deltaTime);
 
         // Player and Camera rotation
+        float yCameraRotation = InputManager.instance.Controls.Camera.Pitch.ReadValue<float>();
+        float xCameraRotation = InputManager.instance.Controls.Camera.Yaw.ReadValue<float>();
+
         if (canMove)
         {
-            rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
+            rotationX += -yCameraRotation * lookSpeed;
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
-        }
+            transform.rotation *= Quaternion.Euler(0, xCameraRotation * lookSpeed, 0);
+        } //Mouse.current.delta.x.ReadValue()
+
+        // Reset
+        // moveVerticle = 0.0f;
+        // moveHorizontal = 0.0f;
+        isJumping = false;
+    }
+
+    void OnJump()
+    {
+        isJumping = true;
+    }
+
+    void Move(Vector2 direction)
+    {
+        moveVerticle = direction.y;
+        moveHorizontal = direction.x;
+    }
+
+    void Stop()
+    {
+        moveVerticle = 0f;
+        moveHorizontal = 0f;
+    }
+
+    void ToggleRun()
+    {
+        isRunning = !isRunning;
     }
 }

@@ -634,7 +634,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1027782210
 MonoBehaviour:
@@ -685,7 +685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eeaddfd7726849c4855747a7c6d3f15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 1000
+  maxDistance: 10
   defaultColor:
     serializedVersion: 2
     rgba: 4294967295
@@ -704,6 +704,8 @@ GameObject:
   - component: {fileID: 1255247747}
   - component: {fileID: 1255247748}
   - component: {fileID: 1255247749}
+  - component: {fileID: 1255247750}
+  - component: {fileID: 1255247751}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -751,6 +753,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centerOfMass: {fileID: 1689995895}
+--- !u!114 &1255247750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255247746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: d0211493392ba4138846c55b1cf5901d,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &1255247751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255247746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de5cc589b2c2d4ade827d61403003680, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1271168076
 GameObject:
   m_ObjectHideFlags: 0
@@ -1008,7 +1053,7 @@ MonoBehaviour:
   jumpSpeed: 8
   gravity: 20
   playerCamera: {fileID: 963194227}
-  lookSpeed: 2
+  lookSpeed: 0.5
   lookXLimit: 45
   canMove: 1
 --- !u!114 &1495317782
@@ -1216,7 +1261,6 @@ GameObject:
   - component: {fileID: 1689995899}
   - component: {fileID: 1689995898}
   - component: {fileID: 1689995897}
-  - component: {fileID: 1689995902}
   - component: {fileID: 1689995903}
   - component: {fileID: 1689995896}
   m_Layer: 0
@@ -1328,19 +1372,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &1689995902
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1689995895}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 3
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1689995903
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,12 +8,15 @@ public class Gun : MonoBehaviour
     GameObject bullet;
     [SerializeField]
     float speed = 600.0f;
-    void Update()
+
+    void Start()
     {
-        if(Input.GetKeyDown("r"))
-        {
-            GameObject newBullet = Instantiate(bullet, (this.transform.position + transform.forward), Quaternion.identity);
-            newBullet.GetComponent<Rigidbody>().velocity = this.transform.forward * speed;
-        }
+        InputManager.instance.Controls.Player.Trigger.performed += ctx => Fire();
+    }
+
+    void Fire()
+    {
+        GameObject newBullet = Instantiate(bullet, (this.transform.position + transform.forward), Quaternion.identity);
+        newBullet.GetComponent<Rigidbody>().velocity = this.transform.forward * speed;
     }
 }
