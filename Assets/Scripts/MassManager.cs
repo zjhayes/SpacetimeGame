@@ -24,6 +24,12 @@ public class MassManager : MonoBehaviour
     public GameObject CenterOfMass
     {
         get { return centerOfMass; }
-        set { centerOfMass = value; }
+        set 
+        {
+            if(value.GetComponent<CenterOfMass>())
+            {
+                centerOfMass = value;
+            }
+        }
     }
 }

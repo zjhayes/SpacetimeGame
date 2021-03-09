@@ -82,7 +82,7 @@ public class LoadManager : MonoBehaviour
         return Vector3.Distance(compare.transform.position, transform.position);
     }
 
-    bool HasLoad()
+    public bool HasLoad()
     {
         if(currentPickup == null || !currentPickup.GetComponent<Pickup>().IsHolding)
         {

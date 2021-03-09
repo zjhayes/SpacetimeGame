@@ -442,12 +442,12 @@ GameObject:
   - component: {fileID: 933209471}
   - component: {fileID: 933209476}
   m_Layer: 0
-  m_Name: PhotonCanon
+  m_Name: PhotonCanon_old
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &933209471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -460,7 +460,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a22fb3f2eb64ec69a82ad96a1c2271, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  photon: {fileID: 2677007019276079871, guid: de9d0246984db49aca90ca85cc591331, type: 3}
+  photonPrefab: {fileID: 2677007019276079871, guid: de9d0246984db49aca90ca85cc591331,
+    type: 3}
   speed: 15
   laserWidth: 0.2
   maxPhotonDistance: 5
@@ -533,12 +534,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 933209470}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.19, z: -4.18}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.9579983, y: 5.61, z: 2.6070387}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!120 &933209476
 LineRenderer:
@@ -901,6 +902,75 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 711159f99bc0e491ca534822560959f5, type: 3}
+--- !u!1001 &2720875575737002220
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2720875577086127370, guid: 2466c99bf1a2a40669d6ee3acf4b98e6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720875577086127370, guid: 2466c99bf1a2a40669d6ee3acf4b98e6,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720875577086127370, guid: 2466c99bf1a2a40669d6ee3acf4b98e6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720875577086127370, guid: 2466c99bf1a2a40669d6ee3acf4b98e6,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720875577086127370, guid: 2466c99bf1a2a40669d6ee3acf4b98e6,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720875577086127370, guid: 2466c99bf1a2a40669d6ee3acf4b98e6,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720875577086127370, guid: 2466c99bf1a2a40669d6ee3acf4b98e6,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720875577086127370, guid: 2466c99bf1a2a40669d6ee3acf4b98e6,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720875577086127370, guid: 2466c99bf1a2a40669d6ee3acf4b98e6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720875577086127370, guid: 2466c99bf1a2a40669d6ee3acf4b98e6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720875577086127370, guid: 2466c99bf1a2a40669d6ee3acf4b98e6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720875577086127375, guid: 2466c99bf1a2a40669d6ee3acf4b98e6,
+        type: 3}
+      propertyPath: m_Name
+      value: PhotonLaser
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2466c99bf1a2a40669d6ee3acf4b98e6, type: 3}
 --- !u!1001 &4069454568864897818
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -983,7 +1053,8 @@ PrefabInstance:
       propertyPath: centerOfMass
       value: 
       objectReference: {fileID: 1689995895}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4069454570027865244, guid: baecbb3a96b7f46da9cc75e139172efd, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: baecbb3a96b7f46da9cc75e139172efd, type: 3}
 --- !u!1001 &6133302434568424122
 PrefabInstance:

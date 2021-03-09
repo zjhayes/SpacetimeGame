@@ -9,10 +9,14 @@ public class Mass : MonoBehaviour
     float gravityRadius = 4.0f;
     GameObject centerOfMass;
 
-    void Update()
+    void Start()
     {
         centerOfMass = MassManager.instance.CenterOfMass;
-        if(centerOfMass == null) { return; }
+    }
+
+    void Update()
+    {
+        if(!centerOfMass.activeSelf) { return; }
 
         float distance = Vector3.Distance(centerOfMass.transform.position, gameObject.transform.position);
 

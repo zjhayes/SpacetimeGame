@@ -5,9 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class CenterOfMass : MonoBehaviour
 {
-    void Update()
+    void Start()
     {
-        
+        // Inactive by default.
+        gameObject.SetActive(false);
     }
 
     public float DistanceRelativeToPlayer(GameObject other)

@@ -79,7 +79,7 @@ public class PhotonCanon : MonoBehaviour
 
     void Fire()
     {
-        GameObject newPhoton = Instantiate(photonPrefab, (this.transform.position + transform.forward), Quaternion.identity);
+        GameObject newPhoton = Instantiate(photonPrefab, this.transform.position, Quaternion.identity);
         newPhoton.GetComponent<Rigidbody>().velocity = this.transform.forward * speed;
         photons.Add(newPhoton);
     }

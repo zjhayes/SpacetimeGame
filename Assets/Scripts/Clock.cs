@@ -15,7 +15,14 @@ public class Clock : MonoBehaviour
     {
         get
         {
-            return centerOfMass.GetComponent<CenterOfMass>().DistanceRelativeToPlayer(gameObject);
+            if(centerOfMass == null)
+            {
+                return 1.0f;
+            }
+            else
+            {
+                return centerOfMass.GetComponent<CenterOfMass>().DistanceRelativeToPlayer(gameObject);
+            }
         }
     }
 }
