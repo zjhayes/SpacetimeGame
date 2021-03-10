@@ -15,17 +15,21 @@ public class WeaponController : MonoBehaviour
 
     void Fire()
     {
-        // Check if object being aimed at can be picked up.
+        if(load.GetComponent<LoadManager>().HasLoad()) { return; } // Player is carrying object.
+
+        // Check if object being aimed at can be fired at.
         GameObject objectInView = PlayerManager.instance.Player.GetComponent<PlayerInteraction>().CurrentHit;
-        if(objectInView.GetComponent<Massable>())
+        if(objectInView.GetComponent<CenterOfMass>())
         {
-            if(!objectInView.GetComponent<Massable>().HasMass)
+            if(objectInView.GetComponent<CenterOfMass>().IsSet)
             {
-                objectInView.GetComponent<Massable>().Set();
+                // This is the current center of mass, unset.
+                objectInView.GetComponent<CenterOfMass>().Unset();
             }
             else
             {
-                objectInView.GetComponent<Massable>().Unset();
+                // Set object as center of mass.
+                objectInView.GetComponent<CenterOfMass>().Set();
             }
         }
     }

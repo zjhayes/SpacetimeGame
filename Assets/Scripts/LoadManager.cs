@@ -88,6 +88,9 @@ public class LoadManager : MonoBehaviour
         {
             return false;
         }
-        return true;
+        else
+        {
+            return true;
+        }
     }
 }

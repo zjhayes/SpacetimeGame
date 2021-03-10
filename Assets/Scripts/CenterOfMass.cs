@@ -5,10 +5,44 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class CenterOfMass : MonoBehaviour
 {
+    [SerializeField]
+    bool setDefault = false;
+    [SerializeField]
+    Vector3 offset;
+    [SerializeField]
+    float fadeSpeed = 1.0f;
+
+
     void Start()
     {
-        // Inactive by default.
-        gameObject.SetActive(false);
+        if(setDefault)
+        {
+            // Set this as default center of mass.
+            Set();
+        }
+    }
+
+    public void Set()
+    {
+        MassManager.instance.CenterOfMass = gameObject;
+    }
+
+    public void Unset()
+    {
+        MassManager.instance.CenterOfMass = null;
+    }
+
+    public bool IsSet
+    {
+        get
+        { 
+            return MassManager.instance.CenterOfMass == gameObject; 
+        }
+    }
+
+    public Vector3 Offset
+    {
+        get { return offset; }
     }
 
     public float DistanceRelativeToPlayer(GameObject other)

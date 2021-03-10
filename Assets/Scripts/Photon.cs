@@ -22,11 +22,17 @@ public class Photon : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if(other.GetComponent<PhotonSensor>())
+        {
+            other.GetComponent<PhotonSensor>().Power();
+        }
+
         Destroy(gameObject, destroyDelay);
     }
 
     void Start()
     {
+        // Destroy after life expires.
         Destroy(gameObject, maxLife);
     }
 

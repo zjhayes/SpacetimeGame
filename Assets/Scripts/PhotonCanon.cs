@@ -17,7 +17,7 @@ public class PhotonCanon : MonoBehaviour
     List<GameObject> photons;
     LineRenderer line;
 
-     private float nextActionTime = 0.0f;
+    private float nextActionTime = 0.0f;
 
     void Start()
     {
@@ -81,6 +81,7 @@ public class PhotonCanon : MonoBehaviour
     {
         GameObject newPhoton = Instantiate(photonPrefab, this.transform.position, Quaternion.identity);
         newPhoton.GetComponent<Rigidbody>().velocity = this.transform.forward * speed;
+        newPhoton.transform.parent = this.transform;
         photons.Add(newPhoton);
     }
 }
