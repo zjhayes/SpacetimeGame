@@ -10,6 +10,7 @@ public class LoadManager : MonoBehaviour
     float dropForce = 50.0f;
 
     GameObject currentPickup;
+    bool recentlyThrown = false;
 
     void Start()
     {
@@ -27,6 +28,8 @@ public class LoadManager : MonoBehaviour
                 PutDown();
             }
         }
+
+        recentlyThrown = false;
     }
 
     void OnInteract()
@@ -64,6 +67,7 @@ public class LoadManager : MonoBehaviour
         {
             currentPickup.GetComponent<Pickup>().Throw(gameObject, throwForce);
             currentPickup = null;
+            recentlyThrown = true;
         }
     }
 
@@ -84,7 +88,7 @@ public class LoadManager : MonoBehaviour
 
     public bool HasLoad()
     {
-        if(currentPickup == null || !currentPickup.GetComponent<Pickup>().IsHolding)
+        if((currentPickup == null || !currentPickup.GetComponent<Pickup>().IsHolding))
         {
             return false;
         }
@@ -92,5 +96,10 @@ public class LoadManager : MonoBehaviour
         {
             return true;
         }
+    }
+
+    public bool RecentlyThrown()
+    {
+        return recentlyThrown;
     }
 }

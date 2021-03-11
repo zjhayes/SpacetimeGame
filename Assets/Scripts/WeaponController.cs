@@ -15,7 +15,7 @@ public class WeaponController : MonoBehaviour
 
     void Fire()
     {
-        if(load.GetComponent<LoadManager>().HasLoad()) { return; } // Player is carrying object.
+        if(load.GetComponent<LoadManager>().HasLoad() || load.GetComponent<LoadManager>().RecentlyThrown()) { return; } // Player is carrying object.
 
         // Check if object being aimed at can be fired at.
         GameObject objectInView = PlayerManager.instance.Player.GetComponent<PlayerInteraction>().CurrentHit;
