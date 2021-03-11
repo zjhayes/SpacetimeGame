@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 7315321292006631542}
   - component: {fileID: 7315321292006631541}
   m_Layer: 0
-  m_Name: MassBox 1
+  m_Name: MassBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,7 +108,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7315321292006631540}
   m_LocalRotation: {x: -0, y: -0.258819, z: -0, w: 0.9659259}
-  m_LocalPosition: {x: 1.39, y: 1.75, z: 6}
+  m_LocalPosition: {x: 1.4, y: 1.75, z: 6}
   m_LocalScale: {x: 1.4999999, y: 1.4999999, z: 1.5}
   m_Children:
   - {fileID: 7316942181396726296}
