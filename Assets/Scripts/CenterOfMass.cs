@@ -9,8 +9,6 @@ public class CenterOfMass : MonoBehaviour
     bool setDefault = false;
     [SerializeField]
     Vector3 offset;
-    [SerializeField]
-    float fadeSpeed = 1.0f;
 
     public delegate void OnMassChanged();
     public OnMassChanged onMassChanged;

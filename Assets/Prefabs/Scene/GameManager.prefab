@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  reach: 1
+  reach: 2
 --- !u!114 &4069454570027865247
 MonoBehaviour:
   m_ObjectHideFlags: 0

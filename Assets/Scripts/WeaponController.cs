@@ -6,7 +6,10 @@ public class WeaponController : MonoBehaviour
 {
     [SerializeField]
     GameObject load;
-
+    [SerializeField]
+    GameObject laserPrefab;
+    [SerializeField]
+    float fireSpeed = 5.0f;
 
     void Start()
     {
@@ -32,5 +35,16 @@ public class WeaponController : MonoBehaviour
                 objectInView.GetComponent<CenterOfMass>().Set();
             }
         }
+        else
+        {
+            ShootLaser();
+        }
+    }
+
+    void ShootLaser()
+    {
+        GameObject newLaser = Instantiate(laserPrefab, this.transform.position, this.transform.rotation);
+        newLaser.GetComponent<Laser>().StartPoint.GetComponent<Rigidbody>().velocity = this.transform.forward * fireSpeed;
+        newLaser.GetComponent<Laser>().EndPoint.GetComponent<Rigidbody>().velocity = this.transform.forward * fireSpeed;
     }
 }

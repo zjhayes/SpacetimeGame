@@ -6,7 +6,7 @@ public class Clock : MonoBehaviour
 {
     private GameObject centerOfMass;
 
-    void Start()
+    void Update()
     {
         centerOfMass = MassManager.instance.CenterOfMass;
     }

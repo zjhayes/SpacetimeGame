@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class StairController : MonoBehaviour
 {
@@ -21,6 +20,8 @@ public class StairController : MonoBehaviour
     bool synchronize = false;
     [SerializeField]
     bool inverse = false;
+    [SerializeField]
+    bool reversePower = false;
 
     float distance = 0f;
 
@@ -33,12 +34,12 @@ public class StairController : MonoBehaviour
 
     void Enable()
     {
-        enabled = true;
+        enabled = (!reversePower) ? true : false;
     }
 
     void Disable()
     {
-        enabled = false;
+        enabled = (!reversePower) ? false : true;
     }
 
     void Update()

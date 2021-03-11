@@ -65,7 +65,6 @@ public class PhotonCanon : MonoBehaviour
         // Remove destroyed photons and all proceeding photons.
         foreach(GameObject destroyedPhoton in photonsToRemove)
         {
-            photons.IndexOf(destroyedPhoton);
             for(int i = photons.IndexOf(destroyedPhoton); i > 0; i--)
             {
                 photons.RemoveAt(i);

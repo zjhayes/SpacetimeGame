@@ -42,6 +42,12 @@ public class LoadManager : MonoBehaviour
             {
                 PickUp(objectInView);
             }
+
+            // Call interaction event.
+            if(objectInView.GetComponent<Interactable>())
+            {
+                objectInView.GetComponent<Interactable>().Interact();
+            }
         }
         else
         {

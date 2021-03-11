@@ -15,7 +15,7 @@ public class Mass : MonoBehaviour
     void Update()
     {
         // Return if holding.
-        if(gameObject.GetComponent<Pickup>().IsHolding)
+        if(gameObject.GetComponent<Pickup>() && gameObject.GetComponent<Pickup>().IsHolding)
         {
             return;
         }
