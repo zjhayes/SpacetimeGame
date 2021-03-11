@@ -8,7 +8,9 @@ public class CrosshairController : MonoBehaviour
     [SerializeField]
     Color32 defaultColor;
     [SerializeField]
-    Color32 hoverColor;
+    Color32 hoverPickupColor;
+    [SerializeField]
+    Color32 hoverMassableColor;
     [SerializeField]
     Camera fpsCamera;
     [SerializeField]
@@ -26,21 +28,34 @@ public class CrosshairController : MonoBehaviour
         GameObject currentTarget = interact.CurrentHit;
 
         bool isHoveringPickup = false;
+        bool isHoveringMassable = false;
 
         // If aiming at object, if it's close enough to pick up...
-        if(currentTarget != null && currentTarget.GetComponent<Pickup>() && !load.GetComponent<LoadManager>().PickupTooFar(currentTarget))
+        if(currentTarget != null)
         {
-            isHoveringPickup = true;
+            if(currentTarget.GetComponent<Pickup>() && !load.GetComponent<LoadManager>().PickupTooFar(currentTarget))
+            {
+                isHoveringPickup = true;
+            }
+            if(currentTarget.GetComponent<CenterOfMass>())
+            {
+                isHoveringMassable = true;
+            }
         }
 
+
         // Set color of crosshair.
-        if(isHoveringPickup)
+        if(!isHoveringMassable && isHoveringPickup)
         {
-            GetComponent<Image>().color = hoverColor;
+            GetComponent<Image>().color = hoverPickupColor;
         }
         else
         {
             GetComponent<Image>().color = defaultColor;
+        }
+        if(isHoveringMassable)
+        {
+            GetComponent<Image>().color = hoverMassableColor;
         }
     }
 }

@@ -12,6 +12,9 @@ public class CenterOfMass : MonoBehaviour
     [SerializeField]
     float fadeSpeed = 1.0f;
 
+    public delegate void OnMassChanged();
+    public OnMassChanged onMassChanged;
+
 
     void Start()
     {
@@ -25,11 +28,21 @@ public class CenterOfMass : MonoBehaviour
     public void Set()
     {
         MassManager.instance.CenterOfMass = gameObject;
+        
+        if(onMassChanged != null)
+        {
+            onMassChanged.Invoke();
+        }
     }
 
     public void Unset()
     {
         MassManager.instance.CenterOfMass = null;
+
+        if(onMassChanged != null)
+        {
+            onMassChanged.Invoke();
+        }
     }
 
     public bool IsSet
