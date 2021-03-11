@@ -6,17 +6,21 @@ using System;
 public class StairController : MonoBehaviour
 {
     [SerializeField]
-    List<GameObject> stairs;
+    List<GameObject> steps;
     [SerializeField]
     GameObject disabledPosition;
     [SerializeField]
     GameObject enabledPosition;
     [SerializeField]
-    float speed = 1.0f;
+    float speed = 5.0f;
     [SerializeField]
     bool enabled = false;
     [SerializeField]
     GameObject powerSource;
+    [SerializeField]
+    bool synchronize = false;
+    [SerializeField]
+    bool inverse = false;
 
     float distance = 0f;
 
@@ -39,46 +43,58 @@ public class StairController : MonoBehaviour
 
     void Update()
     {
+        distance = Vector3.Distance(enabledPosition.transform.position, disabledPosition.transform.position);
+        
         if(enabled)
         {
-            UpdateEnable();
+            if(synchronize)
+            {
+                UpdateStepsSynchronized(enabledPosition.transform.position.y);
+            }
+            else
+            {
+                UpdateStepsScattered(enabledPosition.transform.position.y);
+            }
         }
         else
         {
-            UpdateDisable();
+            UpdateStepsSynchronized(disabledPosition.transform.position.y);
         }
     }
 
-    void UpdateEnable()
+    void UpdateStepsSynchronized(float height)
     {
-        float step = speed * Time.deltaTime;
+        float changeAmount = speed * Time.deltaTime;
         int index = 0;
-        foreach(GameObject stair in stairs)
+        foreach(GameObject step in steps)
         {
-            // Set target to only update Y position.
-            float height = disabledPosition.transform.position.y + CalculateHeight(index);
-            Vector3 target = new Vector3(stair.transform.position.x, height, stair.transform.position.z);
-            stair.transform.position = Vector3.MoveTowards(stair.transform.position, target, step);
+            Vector3 target = new Vector3(step.transform.position.x, height, step.transform.position.z);
+            step.transform.position = Vector3.MoveTowards(step.transform.position, target, changeAmount);
             index++;
         }
     }
 
-    void UpdateDisable()
+    void UpdateStepsScattered(float height)
     {
-        float step = speed * Time.deltaTime;
+        float changeAmount = speed * Time.deltaTime;
         int index = 0;
-        foreach(GameObject stair in stairs)
+        foreach(GameObject step in steps)
         {
             // Set target to only update Y position.
-            float height = disabledPosition.transform.position.y;
-            Vector3 target = new Vector3(stair.transform.position.x, height, stair.transform.position.z);
-            stair.transform.position = Vector3.MoveTowards(stair.transform.position, target, step);
+            height = disabledPosition.transform.position.y + CalculateHeight(index);
+            Vector3 target = new Vector3(step.transform.position.x, height * getHeightMultiplier(), step.transform.position.z);
+            step.transform.position = Vector3.MoveTowards(step.transform.position, target, changeAmount);
             index++;
         }
+    }
+
+    float getHeightMultiplier()
+    {
+        return (inverse) ? -1 : 1;
     }
 
     float CalculateHeight(float index)
     {
-        return distance * ((index + 1) / stairs.Count);
+        return distance * ((index + 1) / steps.Count);
     }
 }

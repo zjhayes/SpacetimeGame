@@ -9,22 +9,35 @@ public class Mass : MonoBehaviour
     float gravityRadius = 4.0f;
     [SerializeField]
     float degrees = 360;
+    [SerializeField]
+    bool useGravityDefault = true;
 
     void Update()
     {
+        // Return if holding.
+        if(gameObject.GetComponent<Pickup>().IsHolding)
+        {
+            return;
+        }
+
         GameObject centerOfMass = MassManager.instance.CenterOfMass;
-        if(centerOfMass == null) { return; }
+        if(centerOfMass == null) 
+        { 
+            // Set to default gravity.
+            gameObject.GetComponent<Rigidbody>().useGravity = useGravityDefault;
+            return; 
+        }
 
         float distance = Vector3.Distance(centerOfMass.transform.position, gameObject.transform.position);
 
         // Disable gravity if within gravityRadius.
-        if(distance <= gravityRadius)
+        if(distance > gravityRadius)
         {
-            gameObject.GetComponent<Rigidbody>().useGravity = false;
+            gameObject.GetComponent<Rigidbody>().useGravity = useGravityDefault;
         }
-        else if(!gameObject.GetComponent<Pickup>() || !gameObject.GetComponent<Pickup>().IsHolding) // enable gravity if user isn't holding object, or not pickup.
-        {
-            gameObject.GetComponent<Rigidbody>().useGravity = true;
+        else
+        { 
+            gameObject.GetComponent<Rigidbody>().useGravity = false;
         }
         
         float rotationSpeedDegrees = (1 / distance) * degrees; // degrees per second.

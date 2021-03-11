@@ -126,6 +126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravityRadius: 10000
   degrees: 360
+  useGravityDefault: 0
 --- !u!114 &741204388697201703
 MonoBehaviour:
   m_ObjectHideFlags: 0
