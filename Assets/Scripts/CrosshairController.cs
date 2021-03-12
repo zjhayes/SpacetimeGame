@@ -25,22 +25,20 @@ public class CrosshairController : MonoBehaviour
     
     void Update()
     {
-        GameObject currentTarget = interact.CurrentHit;
-
         bool isHoveringPickup = false;
         bool isHoveringMassable = false;
 
-
         // If aiming at object..
-        if(currentTarget != null)
+        if(interact.HasHit)
         {
+            GameObject targetedObject = interact.CurrentObject;
             // If aiming at a pickup or interactable that's within reach...
-            if((currentTarget.GetComponent<Pickup>() ||  currentTarget.GetComponent<Interactable>()) &&
-                !load.GetComponent<LoadManager>().PickupTooFar(currentTarget))
+            if((targetedObject.GetComponent<Pickup>() ||  targetedObject.GetComponent<Interactable>()) &&
+                !load.GetComponent<LoadManager>().PickupTooFar(targetedObject))
             {
                 isHoveringPickup = true;
             }
-            if(currentTarget.GetComponent<CenterOfMass>())
+            if(targetedObject.GetComponent<CenterOfMass>())
             {
                 isHoveringMassable = true;
             }

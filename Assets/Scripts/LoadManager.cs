@@ -11,11 +11,13 @@ public class LoadManager : MonoBehaviour
 
     GameObject currentPickup;
     bool recentlyThrown = false;
+    PlayerInteraction interact;
 
     void Start()
     {
-        PlayerManager.instance.Player.GetComponent<PlayerInteraction>().onInteract += OnInteract;
-        PlayerManager.instance.Player.GetComponent<PlayerInteraction>().onFire += Throw;
+        interact = PlayerManager.instance.Player.GetComponent<PlayerInteraction>();
+        interact.onInteract += OnInteract;
+        interact.onFire += Throw;
     }
 
     void Update()
@@ -34,10 +36,10 @@ public class LoadManager : MonoBehaviour
 
     void OnInteract()
     {
-        if(!HasLoad())
+        if(!HasLoad() && interact.HasHit)
         {
             // Check if object being aimed at can be picked up.
-            GameObject objectInView = PlayerManager.instance.Player.GetComponent<PlayerInteraction>().CurrentHit;
+            GameObject objectInView = interact.CurrentObject;
             if(objectInView.GetComponent<Pickup>())
             {
                 PickUp(objectInView);

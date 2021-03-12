@@ -9,7 +9,10 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField]
     float maxDistance = 500.0f;
 
-    GameObject currentHit;
+    bool hasHit = false;
+    GameObject currentObject;
+    Vector3 currentPoint;
+
 
     public delegate void OnInteract();
     public OnInteract onInteract;
@@ -30,13 +33,29 @@ public class PlayerInteraction : MonoBehaviour
 
         if(Physics.Raycast(ray, out hit, maxDistance))
         {
-            currentHit=hit.collider.gameObject;
+            currentObject = hit.transform.gameObject;
+            currentPoint = hit.point;
+            hasHit = true;
+        }
+        else
+        {
+            hasHit = false;
         }
     }
 
-    public GameObject CurrentHit
+    public GameObject CurrentObject
     {
-        get{ return currentHit; }
+        get{ return currentObject; }
+    }
+
+    public Vector3 CurrentPoint
+    {
+        get{ return currentPoint; }
+    }
+
+    public bool HasHit
+    {
+        get{ return hasHit; }
     }
 
     void Interact()
@@ -57,7 +76,7 @@ public class PlayerInteraction : MonoBehaviour
 
     public float DistanceToHit()
     {
-        float distance = Vector3.Distance(currentHit.transform.position, transform.position);
+        float distance = Vector3.Distance(currentObject.transform.position, transform.position);
         return distance;
     }
 }
