@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 613777886}
   - component: {fileID: 613777891}
   - component: {fileID: 741204388697201703}
+  - component: {fileID: 5947529933086506240}
   m_Layer: 0
   m_Name: Photon
   m_TagString: Untagged
@@ -140,3 +141,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLife: 4
+--- !u!114 &5947529933086506240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2677007019276079871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e10872b2062e482a935a0dd69f5adea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

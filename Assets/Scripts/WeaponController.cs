@@ -32,7 +32,7 @@ public class WeaponController : MonoBehaviour
 
     void PointGun()
     {
-        if(interact.HasHit)// && interact.DistanceToHit() > minDistance)
+        if(interact.HasHit)
         {
             // Point gun towards object being aimed at.
             Vector3 aimPoint = interact.CurrentPoint;
@@ -75,7 +75,7 @@ public class WeaponController : MonoBehaviour
 
     void ShootLaser()
     {
-        GameObject newLaser = Instantiate(laserPrefab, this.transform.position, this.transform.rotation);
+        GameObject newLaser = Instantiate(laserPrefab, this.transform.forward + this.transform.position, this.transform.rotation);
         newLaser.GetComponent<Laser>().StartPoint.GetComponent<Rigidbody>().velocity = this.transform.forward * fireSpeed;
         newLaser.GetComponent<Laser>().EndPoint.GetComponent<Rigidbody>().velocity = this.transform.forward * fireSpeed;
     }

@@ -33,7 +33,10 @@ public class PlayerInteraction : MonoBehaviour
 
         if(Physics.Raycast(ray, out hit, maxDistance))
         {
-            currentObject = hit.transform.gameObject;
+            if(hit.transform.gameObject != null && !hit.transform.GetComponent<IgnoreInteraction>())
+            {
+                currentObject = hit.transform.gameObject;
+            }
             currentPoint = hit.point;
             hasHit = true;
         }
