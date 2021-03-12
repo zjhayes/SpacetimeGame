@@ -47,4 +47,10 @@ public class Mass : MonoBehaviour
 
         gameObject.GetComponent<Rigidbody>().velocity = newVelocity;
     }
+
+    public float Degrees
+    {
+        get{ return degrees; }
+        set{ degrees = value; }
+    }
 }

@@ -17,13 +17,9 @@ public class PlayerInteraction : MonoBehaviour
     public delegate void OnInteract();
     public OnInteract onInteract;
 
-    public delegate void OnFire();
-    public OnFire onFire;
-
     void Start()
     {
         InputManager.instance.Controls.Player.Interact.performed += ctx => Interact();
-        InputManager.instance.Controls.Player.Fire.started += ctx => Fire();
     }
 
     void Update()
@@ -66,14 +62,6 @@ public class PlayerInteraction : MonoBehaviour
         if(onInteract != null)
         {
             onInteract.Invoke();
-        }
-    }
-
-    void Fire()
-    {
-        if(onFire != null)
-        {
-            onFire.Invoke();
         }
     }
 

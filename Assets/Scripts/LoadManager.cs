@@ -10,14 +10,14 @@ public class LoadManager : MonoBehaviour
     float dropForce = 50.0f;
 
     GameObject currentPickup;
-    bool recentlyThrown = false;
     PlayerInteraction interact;
+
+    bool recentlyThrown = false;
 
     void Start()
     {
         interact = PlayerManager.instance.Player.GetComponent<PlayerInteraction>();
         interact.onInteract += OnInteract;
-        interact.onFire += Throw;
     }
 
     void Update()
@@ -69,7 +69,7 @@ public class LoadManager : MonoBehaviour
         currentPickup = null;
     }
 
-    void Throw()
+    public void Throw()
     {
         if(HasLoad())
         {

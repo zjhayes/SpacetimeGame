@@ -16,18 +16,41 @@ public class WeaponController : MonoBehaviour
     float minRotation= 330.0f;
     [SerializeField]
     float maxRotation = 360.0f;
+    [SerializeField]
+    float cooldown = 1.0f;
 
     PlayerInteraction interact;
+    bool charging = false;
+    float charge;
+    float baseCharge = 1.0f;
+    float maxCharge = 5.0f;
+    float currentCooldown = 0.0f;
 
     void Start()
     {
-        PlayerManager.instance.Player.GetComponent<PlayerInteraction>().onFire += Fire;
         interact = PlayerManager.instance.Player.GetComponent<PlayerInteraction>();
+        InputManager.instance.Controls.Player.Fire.started += ctx => OnFireStarted();
+        InputManager.instance.Controls.Player.Fire.canceled += ctx => Fire();
+        InputManager.instance.Controls.Player.Special.performed += ctx => Special();
+        charge = baseCharge;
     }
 
     void Update()
     {
         PointGun();
+        Debug.Log(currentCooldown);
+
+        if(charging)
+        {
+            charge += Time.deltaTime;
+        }
+        // Autofire if charge is at max.
+        if(charge >= maxCharge)
+        {
+            Fire();
+        }
+
+        currentCooldown -= Time.deltaTime;
     }
 
     void PointGun()
@@ -45,14 +68,46 @@ public class WeaponController : MonoBehaviour
             Vector3 clampedRotation = new Vector3(transform.localEulerAngles.x, clampedY, transform.localEulerAngles.z);
             transform.localRotation = Quaternion.Euler(clampedRotation);
         }
-        // Else transform looking forward? 
+    }
+
+    void OnFireStarted()
+    {
+        // Throw if carrying, otherwise charge weapon.
+        if(load.GetComponent<LoadManager>().HasLoad()) 
+        {
+            load.GetComponent<LoadManager>().Throw();
+        }
+        else if(currentCooldown < 0)
+        {
+            charging = true;
+        }
     }
 
     void Fire()
     {
-        if(load.GetComponent<LoadManager>().HasLoad() || load.GetComponent<LoadManager>().RecentlyThrown()) { return; } // Player is carrying object.
+        if(charging)
+        {
+            ShootLaser();
+            charging = false;
+            currentCooldown = cooldown;
+        }
+        charge = baseCharge;
+    }
 
-        // Check if object being aimed at can be fired at.
+    void ShootLaser()
+    {
+        GameObject newLaser = Instantiate(laserPrefab, this.transform.forward + this.transform.position, this.transform.rotation);
+        newLaser.GetComponent<Laser>().StartPoint.GetComponent<Rigidbody>().velocity = this.transform.forward * fireSpeed;
+        newLaser.GetComponent<Laser>().EndPoint.GetComponent<Rigidbody>().velocity = this.transform.forward * fireSpeed;
+
+        // Decrease the degrees of gravitational effect based on weapon charge.
+        newLaser.GetComponent<Laser>().StartPoint.GetComponent<Mass>().Degrees *= 1.0f;
+        newLaser.GetComponent<Laser>().EndPoint.GetComponent<Mass>().Degrees *= 1.0f;
+    }
+
+    void Special()
+    {
+        // Check if object being aimed at is massable.
         GameObject objectInView = interact.CurrentObject;
         if(interact.HasHit && objectInView.GetComponent<CenterOfMass>())
         {
@@ -67,16 +122,5 @@ public class WeaponController : MonoBehaviour
                 objectInView.GetComponent<CenterOfMass>().Set();
             }
         }
-        else
-        {
-            ShootLaser();
-        }
-    }
-
-    void ShootLaser()
-    {
-        GameObject newLaser = Instantiate(laserPrefab, this.transform.forward + this.transform.position, this.transform.rotation);
-        newLaser.GetComponent<Laser>().StartPoint.GetComponent<Rigidbody>().velocity = this.transform.forward * fireSpeed;
-        newLaser.GetComponent<Laser>().EndPoint.GetComponent<Rigidbody>().velocity = this.transform.forward * fireSpeed;
     }
 }
