@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class Clock : MonoBehaviour
 {
-    private CenterOfMass centerOfMass;
-
-    void Start()
-    {
-        centerOfMass = MassManager.instance.CenterOfMass.GetComponent<CenterOfMass>();
-    }
-
     public float TimeRelativeToPlayer()
     {
-        if(centerOfMass.IsActive())
+        if(MassManager.instance.HasMassTransforms())
         {
-            return centerOfMass.DistanceRelativeToPlayer(gameObject);
+            float distanceSum = 0.0f;
+            foreach(Transform massable in MassManager.instance.MassTransforms)
+            {
+                distanceSum += massable.GetComponent<Massable>().DistanceRelativeToPlayer(gameObject);
+            }
+            // Return average distance from clock to mass objects.
+            return distanceSum / MassManager.instance.MassTransforms.Count;
         }
         else
         {
+            // No time dilation.
             return 1.0f;
         }
     }

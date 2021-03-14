@@ -20,32 +20,35 @@ public class Mass : MonoBehaviour
             return;
         }
 
-        GameObject centerOfMass = MassManager.instance.CenterOfMass;
-        if(!centerOfMass.GetComponent<CenterOfMass>().IsActive()) 
+        if(!MassManager.instance.HasMassTransforms()) 
         { 
             // Set to default gravity.
             gameObject.GetComponent<Rigidbody>().useGravity = useGravityDefault;
             return; 
         }
 
-        float distance = Vector3.Distance(centerOfMass.transform.position, gameObject.transform.position);
-
-        // Disable gravity if within gravityRadius.
-        if(distance > gravityRadius)
+        // Cycle through objects with mass, and adjust velocity with gravity.
+        foreach(Transform massable in MassManager.instance.MassTransforms)
         {
-            gameObject.GetComponent<Rigidbody>().useGravity = useGravityDefault;
-        }
-        else
-        { 
-            gameObject.GetComponent<Rigidbody>().useGravity = false;
-        }
-        
-        float rotationSpeedDegrees = (1 / distance) * degrees; // degrees per second.
-        Vector3 desiredDirection = (centerOfMass.transform.position + centerOfMass.GetComponent<CenterOfMass>().Offset - gameObject.transform.position).normalized;
-        Vector3 newVelocity = Vector3.RotateTowards(gameObject.GetComponent<Rigidbody>().velocity, desiredDirection,
-            rotationSpeedDegrees * Time.deltaTime * Mathf.Deg2Rad, 0);
+            float distance = Vector3.Distance(massable.position, gameObject.transform.position);
 
-        gameObject.GetComponent<Rigidbody>().velocity = newVelocity;
+            // Disable gravity if within gravityRadius.
+            if(distance > gravityRadius)
+            {
+                gameObject.GetComponent<Rigidbody>().useGravity = useGravityDefault;
+            }
+            else
+            { 
+                gameObject.GetComponent<Rigidbody>().useGravity = false;
+            }
+
+            float rotationSpeedDegrees = (1 / distance) * degrees; // degrees per second.
+            Vector3 desiredDirection = (massable.position + massable.GetComponent<Massable>().Offset - gameObject.transform.position).normalized;
+            Vector3 newVelocity = Vector3.RotateTowards(gameObject.GetComponent<Rigidbody>().velocity, desiredDirection,
+                rotationSpeedDegrees * Time.deltaTime * Mathf.Deg2Rad, 0);
+
+            gameObject.GetComponent<Rigidbody>().velocity = newVelocity;
+        }
     }
 
     public float Degrees
@@ -53,4 +56,23 @@ public class Mass : MonoBehaviour
         get{ return degrees; }
         set{ degrees = value; }
     }
+
+    // TODO: Add center of mass calculation.
+    /**
+    private Vector3 CalculateCenterOfMass()
+    {
+        Vector3 centroid = new Vector3();
+        float massTotal = 0.0f;
+        // Find center position of all mass objects, weighted by mass.
+        foreach(Transform massObject in massTransforms)
+        {
+            float mass = massObject.gameObject.GetComponent<Weighted>().Weight;
+            
+            centroid += massObject.transform.position * mass;
+            massTotal += mass;
+        }
+        centroid /= massTotal;
+        
+        return centroid;
+    }*/
 }

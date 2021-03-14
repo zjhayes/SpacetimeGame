@@ -9,6 +9,8 @@ public class Massable : MonoBehaviour
 
     public delegate void OnMassChanged();
     public OnMassChanged onMassChanged;
+    [SerializeField]
+    Vector3 offset; // Offset the center of gravity.
 
     void Start()
     {
@@ -33,10 +35,23 @@ public class Massable : MonoBehaviour
         InvokeOnMassChanged();
     }
 
+    public float DistanceRelativeToPlayer(GameObject other)
+    {
+        float distanceToObject = Vector3.Distance(this.transform.position, other.transform.position);
+        float distanceToPlayer = Vector3.Distance(this.transform.position, PlayerManager.instance.Player.transform.position);
+
+        return distanceToObject / distanceToPlayer;
+    }
+
     public bool HasMass
     {
         get{ return hasMass; }
         set{ hasMass = value; }
+    }
+
+    public Vector3 Offset
+    {
+        get { return offset; }
     }
 
     private void InvokeOnMassChanged()
