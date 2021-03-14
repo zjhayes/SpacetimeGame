@@ -141,9 +141,12 @@ MonoBehaviour:
   laserPrefab: {fileID: 5767912089190632323, guid: 198c318e7ecc046a5bd6e7cf40cbe362,
     type: 3}
   fireSpeed: 25
-  pointSpeed: 1
-  minRotation: 330
+  pointSpeed: 0.25
+  minRotation: 345
   maxRotation: 360
+  cooldown: 1
+  chargeMultiplier: 2
+  maxCharge: 3
 --- !u!1 &7414946409203371556
 GameObject:
   m_ObjectHideFlags: 0

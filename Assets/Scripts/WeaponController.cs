@@ -18,12 +18,15 @@ public class WeaponController : MonoBehaviour
     float maxRotation = 360.0f;
     [SerializeField]
     float cooldown = 1.0f;
+    [SerializeField]
+    float chargeMultiplier = 2.0f;
+    [SerializeField]
+    float maxCharge = 3.0f;
 
     PlayerInteraction interact;
     bool charging = false;
     float charge;
     float baseCharge = 1.0f;
-    float maxCharge = 5.0f;
     float currentCooldown = 0.0f;
 
     void Start()
@@ -38,7 +41,6 @@ public class WeaponController : MonoBehaviour
     void Update()
     {
         PointGun();
-        Debug.Log(currentCooldown);
 
         if(charging)
         {
@@ -101,8 +103,9 @@ public class WeaponController : MonoBehaviour
         newLaser.GetComponent<Laser>().EndPoint.GetComponent<Rigidbody>().velocity = this.transform.forward * fireSpeed;
 
         // Decrease the degrees of gravitational effect based on weapon charge.
-        newLaser.GetComponent<Laser>().StartPoint.GetComponent<Mass>().Degrees *= 1.0f;
-        newLaser.GetComponent<Laser>().EndPoint.GetComponent<Mass>().Degrees *= 1.0f;
+        newLaser.GetComponent<Laser>().StartPoint.GetComponent<Mass>().Degrees *= 1/charge;
+        newLaser.GetComponent<Laser>().EndPoint.GetComponent<Mass>().Degrees *= 1/charge;
+        Debug.Log(newLaser.GetComponent<Laser>().EndPoint.GetComponent<Mass>().Degrees);
     }
 
     void Special()

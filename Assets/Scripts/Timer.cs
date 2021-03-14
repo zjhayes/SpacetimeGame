@@ -31,7 +31,7 @@ public class Timer : MonoBehaviour
 
     void Reset()
     {
-        currentTime = duration; //* (1 / GetComponent<Clock>().TimeRelativeToPlayer);
+        currentTime = duration * (1 / GetComponent<Clock>().TimeRelativeToPlayer);
         expired = false;
     }
 }

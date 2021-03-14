@@ -21,6 +21,13 @@ public class MassManager : MonoBehaviour
     [SerializeField]
     private GameObject centerOfMass;
 
+    private List<GameObject> massObjects;
+
+    public List<GameObject> MassObjects
+    {
+        get { return massObjects; }
+    }
+
     public GameObject CenterOfMass
     {
         get { return centerOfMass; }
