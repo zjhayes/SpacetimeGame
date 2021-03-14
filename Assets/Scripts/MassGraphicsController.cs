@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Renderer))]
 public class MassGraphicsController : MonoBehaviour
 {
     [SerializeField]
@@ -14,13 +15,13 @@ public class MassGraphicsController : MonoBehaviour
     void Start()
     {
         UpdateMat();
-        this.gameObject.transform.parent.GetComponent<CenterOfMass>().onMassChanged += UpdateMat;
+        this.gameObject.transform.parent.GetComponent<Massable>().onMassChanged += UpdateMat;
     }
 
     void UpdateMat()
     {
         // If current object has mass, set as charged.
-        if(this.gameObject.transform.parent.GetComponent<CenterOfMass>().IsSet)
+        if(this.gameObject.transform.parent.GetComponent<Massable>().HasMass)
         {
             currentMat = chargedMat;
         }

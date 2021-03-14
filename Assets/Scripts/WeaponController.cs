@@ -105,24 +105,23 @@ public class WeaponController : MonoBehaviour
         // Decrease the degrees of gravitational effect based on weapon charge.
         newLaser.GetComponent<Laser>().StartPoint.GetComponent<Mass>().Degrees *= 1/charge;
         newLaser.GetComponent<Laser>().EndPoint.GetComponent<Mass>().Degrees *= 1/charge;
-        Debug.Log(newLaser.GetComponent<Laser>().EndPoint.GetComponent<Mass>().Degrees);
     }
 
     void Special()
     {
         // Check if object being aimed at is massable.
         GameObject objectInView = interact.CurrentObject;
-        if(interact.HasHit && objectInView.GetComponent<CenterOfMass>())
+        if(interact.HasHit && objectInView.GetComponent<Massable>())
         {
-            if(objectInView.GetComponent<CenterOfMass>().IsSet)
+            if(objectInView.GetComponent<Massable>().HasMass)
             {
                 // This is the current center of mass, unset.
-                objectInView.GetComponent<CenterOfMass>().Unset();
+                objectInView.GetComponent<Massable>().Unset();
             }
             else
             {
                 // Set object as center of mass.
-                objectInView.GetComponent<CenterOfMass>().Set();
+                objectInView.GetComponent<Massable>().Set();
             }
         }
     }

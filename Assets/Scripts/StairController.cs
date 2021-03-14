@@ -66,7 +66,7 @@ public class StairController : MonoBehaviour
 
     void UpdateStepsSynchronized(float height)
     {
-        float changeAmount = speed * GetComponent<Clock>().TimeRelativeToPlayer * Time.deltaTime;
+        float changeAmount = speed * GetComponent<Clock>().TimeRelativeToPlayer() * Time.deltaTime;
         int index = 0;
         foreach(GameObject step in steps)
         {
@@ -78,7 +78,7 @@ public class StairController : MonoBehaviour
 
     void UpdateStepsScattered(float height)
     {
-        float changeAmount = speed * GetComponent<Clock>().TimeRelativeToPlayer * Time.deltaTime;
+        float changeAmount = speed * GetComponent<Clock>().TimeRelativeToPlayer() * Time.deltaTime;
         int index = 0;
         foreach(GameObject step in steps)
         {

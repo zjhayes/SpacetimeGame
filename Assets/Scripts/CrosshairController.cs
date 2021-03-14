@@ -38,7 +38,7 @@ public class CrosshairController : MonoBehaviour
             {
                 isHoveringPickup = true;
             }
-            if(targetedObject.GetComponent<CenterOfMass>())
+            if(targetedObject.GetComponent<Massable>())
             {
                 isHoveringMassable = true;
             }

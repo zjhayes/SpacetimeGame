@@ -7,6 +7,9 @@ public class Massable : MonoBehaviour
     [SerializeField]
     bool hasMass = false;
 
+    public delegate void OnMassChanged();
+    public OnMassChanged onMassChanged;
+
     void Start()
     {
         if(hasMass)
@@ -18,23 +21,29 @@ public class Massable : MonoBehaviour
 
     public void Set()
     {
-        // Set this as parent of CenterOfMass.
-        MassManager.instance.CenterOfMass.SetActive(true);
-        MassManager.instance.CenterOfMass.transform.position=this.transform.position;
-        MassManager.instance.CenterOfMass.transform.parent=this.transform;
+        MassManager.instance.AddMassTransform(this.transform);
         hasMass = true;
+        InvokeOnMassChanged();
     }
 
     public void Unset()
     {
-        MassManager.instance.CenterOfMass.transform.parent=null;
-        MassManager.instance.CenterOfMass.SetActive(false);
+        MassManager.instance.RemoveMassTransform(this.transform);
         hasMass = false;
+        InvokeOnMassChanged();
     }
 
     public bool HasMass
     {
         get{ return hasMass; }
         set{ hasMass = value; }
+    }
+
+    private void InvokeOnMassChanged()
+    {
+        if(onMassChanged != null)
+        {
+            onMassChanged.Invoke();
+        }
     }
 }

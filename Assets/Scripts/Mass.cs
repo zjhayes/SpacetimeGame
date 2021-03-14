@@ -21,7 +21,7 @@ public class Mass : MonoBehaviour
         }
 
         GameObject centerOfMass = MassManager.instance.CenterOfMass;
-        if(centerOfMass == null) 
+        if(!centerOfMass.GetComponent<CenterOfMass>().IsActive()) 
         { 
             // Set to default gravity.
             gameObject.GetComponent<Rigidbody>().useGravity = useGravityDefault;

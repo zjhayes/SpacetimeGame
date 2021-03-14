@@ -6,4 +6,9 @@ public class Weighted : MonoBehaviour
 {
     [SerializeField]
     float weight = 1.0f;
+
+    public float Weight
+    {
+        get{ return weight; }
+    }
 }

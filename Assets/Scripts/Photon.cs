@@ -15,6 +15,11 @@ public class Photon : MonoBehaviour
             other.GetComponent<PhotonSensor>().Power();
         }
 
+        if(other.GetComponent<Photon>())
+        {
+            return; // Ignore other photons.
+        }
+
         Destroy(gameObject, destroyDelay);
     }
 

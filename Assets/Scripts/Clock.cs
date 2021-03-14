@@ -4,25 +4,22 @@ using UnityEngine;
 
 public class Clock : MonoBehaviour
 {
-    private GameObject centerOfMass;
+    private CenterOfMass centerOfMass;
 
-    void Update()
+    void Start()
     {
-        centerOfMass = MassManager.instance.CenterOfMass;
+        centerOfMass = MassManager.instance.CenterOfMass.GetComponent<CenterOfMass>();
     }
 
-    public float TimeRelativeToPlayer
+    public float TimeRelativeToPlayer()
     {
-        get
+        if(centerOfMass.IsActive())
         {
-            if(centerOfMass == null)
-            {
-                return 1.0f;
-            }
-            else
-            {
-                return centerOfMass.GetComponent<CenterOfMass>().DistanceRelativeToPlayer(gameObject);
-            }
+            return centerOfMass.DistanceRelativeToPlayer(gameObject);
+        }
+        else
+        {
+            return 1.0f;
         }
     }
 }

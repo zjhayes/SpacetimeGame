@@ -59,7 +59,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a73d768d89d1843718c73df8ba7f870a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  centerOfMass: {fileID: 0}
+  centerOfMassPrefab: {fileID: 9153743071017300852, guid: a7558b1d303e34556aee054f47e15d4a,
+    type: 3}
 --- !u!114 &4069454570027865245
 MonoBehaviour:
   m_ObjectHideFlags: 0

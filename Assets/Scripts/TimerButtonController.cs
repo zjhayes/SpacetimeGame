@@ -20,7 +20,7 @@ public class TimerButtonController : MonoBehaviour
     {
         if(currentTime > 0.0f)
         {
-            currentTime -= GetComponent<Clock>().TimeRelativeToPlayer;
+            currentTime -= GetComponent<Clock>().TimeRelativeToPlayer();
             GetComponent<Power>().PowerOn();
         }
         else

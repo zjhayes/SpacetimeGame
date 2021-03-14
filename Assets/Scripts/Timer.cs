@@ -20,7 +20,7 @@ public class Timer : MonoBehaviour
     {
         if(currentTime > 0.0f)
         {
-            currentTime -= GetComponent<Clock>().TimeRelativeToPlayer * Time.deltaTime;
+            currentTime -= GetComponent<Clock>().TimeRelativeToPlayer() * Time.deltaTime;
         }
         else if(!expired)
         {
@@ -31,7 +31,7 @@ public class Timer : MonoBehaviour
 
     void Reset()
     {
-        currentTime = duration * (1 / GetComponent<Clock>().TimeRelativeToPlayer);
+        currentTime = duration * (1 / GetComponent<Clock>().TimeRelativeToPlayer());
         expired = false;
     }
 }
