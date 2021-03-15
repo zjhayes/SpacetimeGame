@@ -18,6 +18,9 @@ public class MassManager : MonoBehaviour
         }
     #endregion
 
+    [SerializeField]
+    private GameObject worldGravity;
+
     private List<Transform> massTransforms;
 
     void Start()
@@ -28,6 +31,11 @@ public class MassManager : MonoBehaviour
     public List<Transform> MassTransforms
     {
         get{ return massTransforms; }
+    }
+
+    public GameObject WorldGravity
+    {
+        get{ return worldGravity; }
     }
 
     public bool HasMassTransforms()

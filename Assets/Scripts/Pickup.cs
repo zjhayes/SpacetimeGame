@@ -27,7 +27,7 @@ public class Pickup : MonoBehaviour
     {
         currentLoad = load;
         this.transform.parent=currentLoad.transform;
-        this.GetComponent<Rigidbody>().useGravity = false;
+        //this.GetComponent<Rigidbody>().useGravity = false;
         this.GetComponent<Rigidbody>().detectCollisions = true;
 
         isHolding = true;
@@ -37,7 +37,7 @@ public class Pickup : MonoBehaviour
     {
         objectPosition = this.transform.position;
         this.transform.SetParent(null);
-        this.GetComponent<Rigidbody>().useGravity = true;
+        //this.GetComponent<Rigidbody>().useGravity = true;
         this.transform.position = objectPosition;
         currentLoad = null;
 

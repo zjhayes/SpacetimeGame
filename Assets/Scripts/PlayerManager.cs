@@ -21,7 +21,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private GameObject player;
     [SerializeField]
-    private float reach = 1.0f;
+    private float reach = 2.0f;
     private float playerClock = 60;
 
     public float DistanceFrom(GameObject other)

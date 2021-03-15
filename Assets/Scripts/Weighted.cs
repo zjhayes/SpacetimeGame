@@ -5,7 +5,7 @@ using UnityEngine;
 public class Weighted : MonoBehaviour
 {
     [SerializeField]
-    float weight = 1.0f;
+    float weight = 15.0f;
 
     public float Weight
     {
