@@ -63,7 +63,7 @@ public class LoadManager : MonoBehaviour
         currentPickup.GetComponent<Pickup>().PickUp(gameObject);
     }
 
-    void PutDown()
+    public void PutDown()
     {
         currentPickup.GetComponent<Pickup>().Throw(gameObject, dropForce);
         currentPickup = null;
@@ -109,5 +109,10 @@ public class LoadManager : MonoBehaviour
     public bool RecentlyThrown()
     {
         return recentlyThrown;
+    }
+
+    public GameObject CurrentPickup
+    {
+        get{ return currentPickup; }
     }
 }

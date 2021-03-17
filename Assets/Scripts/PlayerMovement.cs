@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     
     bool isJumping = false;
     bool isRunning = false;
+    bool isClimbing = false;
 
     void Start()
     {
@@ -54,6 +55,11 @@ public class PlayerMovement : MonoBehaviour
         {
             moveDirection.y = jumpSpeed;
         }
+        else if(isClimbing)
+        {
+            moveDirection.y = moveDirection.x;
+            moveDirection.x = 0.0f;
+        }
         else
         {
             moveDirection.y = movementDirectionY;
@@ -62,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
         // Apply gravity. Gravity is multiplied by deltaTime twice (once here, and once below
         // when the moveDirection is multiplied by deltaTime). This is because gravity should be applied
         // as an acceleration (ms^-2)
-        if (!characterController.isGrounded)
+        if (!characterController.isGrounded && !isClimbing)
         {
             moveDirection.y -= gravity * Time.deltaTime;
         }
@@ -105,5 +111,11 @@ public class PlayerMovement : MonoBehaviour
     void ToggleRun()
     {
         isRunning = !isRunning;
+    }
+
+    public bool IsClimbing
+    {
+        get{ return isClimbing; }
+        set{ isClimbing = value; }
     }
 }

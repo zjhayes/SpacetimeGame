@@ -5,6 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Pickup : MonoBehaviour
 {
+    [SerializeField]
+    float loadCorrectionSpeed = 1.0f;
+
     bool isHolding = false;
     GameObject currentLoad;
     Vector3 objectPosition;
@@ -13,6 +16,7 @@ public class Pickup : MonoBehaviour
     {
         if(isHolding)
         {
+            this.transform.position = Vector3.MoveTowards(this.transform.position, currentLoad.transform.position, loadCorrectionSpeed);
             this.GetComponent<Rigidbody>().velocity = Vector3.zero;
             this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         }
@@ -27,7 +31,6 @@ public class Pickup : MonoBehaviour
     {
         currentLoad = load;
         this.transform.parent=currentLoad.transform;
-        //this.GetComponent<Rigidbody>().useGravity = false;
         this.GetComponent<Rigidbody>().detectCollisions = true;
 
         isHolding = true;
@@ -37,7 +40,6 @@ public class Pickup : MonoBehaviour
     {
         objectPosition = this.transform.position;
         this.transform.SetParent(null);
-        //this.GetComponent<Rigidbody>().useGravity = true;
         this.transform.position = objectPosition;
         currentLoad = null;
 
