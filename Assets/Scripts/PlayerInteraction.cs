@@ -70,4 +70,9 @@ public class PlayerInteraction : MonoBehaviour
         float distance = Vector3.Distance(currentObject.transform.position, transform.position);
         return distance;
     }
+
+    public bool IsFacing(GameObject other, float degreesOfFreedom)
+    {
+        return Vector3.Angle(fpsCamera.transform.forward, other.transform.forward) > degreesOfFreedom;
+    }
 }

@@ -2,20 +2,27 @@
 
 public class LadderController : MonoBehaviour
 {
-    void OnTriggerEnter(Collider other) 
-    {
-        if(other.tag == "Player")
-        {
-            other.gameObject.GetComponent<PlayerMovement>().IsClimbing = true;
-        }
-    }
+    [SerializeField]
+    float maxAngleOfContact = 10.0f;
 
     void OnTriggerStay(Collider other)
     {
-        if(other.tag == "Player" && PlayerManager.instance.Load.GetComponent<LoadManager>().HasLoad())
+        if(other.tag == "Player")
         {
-            // Drop pickups.
-            PlayerManager.instance.Load.GetComponent<LoadManager>().PutDown();
+            if(PlayerFacingLadder())
+            {
+                other.gameObject.GetComponent<PlayerMovement>().IsClimbing = true;
+
+                if(PlayerCarryingPickup())
+                {
+                    // Drop pickups.
+                    PlayerManager.instance.Load.GetComponent<LoadManager>().PutDown();
+                }
+            }
+            else
+            {
+                other.gameObject.GetComponent<PlayerMovement>().IsClimbing = false;
+            }
         }
     }
 
@@ -25,5 +32,17 @@ public class LadderController : MonoBehaviour
         {
             other.gameObject.GetComponent<PlayerMovement>().IsClimbing = false;
         }
+    }
+
+    bool PlayerFacingLadder()
+    {
+        // Returns true if player is facing ladder within a certain range.
+        return PlayerManager.instance.Player.GetComponent<PlayerInteraction>().IsFacing(gameObject, maxAngleOfContact);
+    }
+
+    bool PlayerCarryingPickup()
+    {
+        // Returns true if player has pickup.
+        return PlayerManager.instance.Load.GetComponent<LoadManager>().HasLoad();
     }
 }

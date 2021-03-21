@@ -14,6 +14,7 @@ public class PhotonCanon : MonoBehaviour
     float maxPhotonDistance = 5f;
     [SerializeField]
     float fireRate = 0.1f;
+
     List<GameObject> photons;
     LineRenderer line;
 

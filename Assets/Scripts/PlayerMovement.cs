@@ -19,9 +19,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 moveDirection = Vector3.zero;
     float rotationX = 0;
 
-    [HideInInspector]
-    public bool canMove = true;
-    
+    bool canMove = true;
     bool isJumping = false;
     bool isRunning = false;
     bool isClimbing = false;
@@ -51,13 +49,13 @@ public class PlayerMovement : MonoBehaviour
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-        if (isJumping && canMove && characterController.isGrounded)
+        if(isJumping && canMove && characterController.isGrounded)
         {
             moveDirection.y = jumpSpeed;
         }
         else if(isClimbing)
         {
-            moveDirection.y = moveDirection.x;
+            moveDirection.y += moveDirection.x;
             moveDirection.x = 0.0f;
         }
         else
@@ -68,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
         // Apply gravity. Gravity is multiplied by deltaTime twice (once here, and once below
         // when the moveDirection is multiplied by deltaTime). This is because gravity should be applied
         // as an acceleration (ms^-2)
-        if (!characterController.isGrounded && !isClimbing)
+        if(!characterController.isGrounded && !isClimbing)
         {
             moveDirection.y -= gravity * Time.deltaTime;
         }
@@ -80,15 +78,17 @@ public class PlayerMovement : MonoBehaviour
         float yCameraRotation = InputManager.instance.Controls.Camera.Pitch.ReadValue<float>();
         float xCameraRotation = InputManager.instance.Controls.Camera.Yaw.ReadValue<float>();
 
-        if (canMove)
+        if(canMove)
         {
             rotationX += -yCameraRotation * lookSpeed;
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, xCameraRotation * lookSpeed, 0);
         }
-
-        isJumping = false;
+        if(characterController.isGrounded)
+        {
+            isJumping = false;
+        }
     }
 
     void OnJump()

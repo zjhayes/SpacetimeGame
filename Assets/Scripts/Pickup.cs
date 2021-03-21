@@ -16,6 +16,7 @@ public class Pickup : MonoBehaviour
     {
         if(isHolding)
         {
+            // Position pickup in front of player
             this.transform.position = Vector3.MoveTowards(this.transform.position, currentLoad.transform.position, loadCorrectionSpeed);
             this.GetComponent<Rigidbody>().velocity = Vector3.zero;
             this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
