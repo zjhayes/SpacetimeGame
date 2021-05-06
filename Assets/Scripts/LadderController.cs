@@ -13,11 +13,11 @@ public class LadderController : MonoBehaviour
             {
                 other.gameObject.GetComponent<PlayerMovement>().IsClimbing = true;
 
-                if(PlayerCarryingPickup())
-                {
-                    // Drop pickups.
-                    PlayerManager.instance.Load.GetComponent<LoadManager>().PutDown();
-                }
+                // if(PlayerCarryingPickup())
+                // {
+                //     // Drop pickups.
+                //     PlayerManager.instance.Load.GetComponent<LoadManager>().PutDown();
+                // }
             }
             else
             {
@@ -40,9 +40,9 @@ public class LadderController : MonoBehaviour
         return PlayerManager.instance.Player.GetComponent<PlayerInteraction>().IsFacing(gameObject, maxAngleOfContact);
     }
 
-    bool PlayerCarryingPickup()
-    {
-        // Returns true if player has pickup.
-        return PlayerManager.instance.Load.GetComponent<LoadManager>().HasLoad();
-    }
+    // bool PlayerCarryingPickup()
+    // {
+    //     // Returns true if player has pickup.
+    //     return PlayerManager.instance.Load.GetComponent<LoadManager>().HasLoad();
+    // }
 }

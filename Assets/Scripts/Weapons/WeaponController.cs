@@ -5,54 +5,35 @@ using UnityEngine;
 public class WeaponController : MonoBehaviour
 {
     [SerializeField]
-    GameObject load;
-    [SerializeField]
-    GameObject laserPrefab;
-    [SerializeField]
-    float fireSpeed = 5.0f;
-    [SerializeField]
     float pointSpeed = 1.0f;
     [SerializeField]
     float minRotation= 330.0f;
     [SerializeField]
     float maxRotation = 360.0f;
     [SerializeField]
-    float cooldown = 1.0f;
-    [SerializeField]
-    float chargeMultiplier = 2.0f;
-    [SerializeField]
-    float maxCharge = 3.0f;
-
+    List<GameObject> weapons;
+    int currentIndex = 0;
+    IWeapon currentWeapon;
     PlayerInteraction interact;
-    bool charging = false;
-    float charge;
-    float baseCharge = 1.0f;
-    float currentCooldown = 0.0f;
 
     void Start()
     {
         interact = PlayerManager.instance.Player.GetComponent<PlayerInteraction>();
         InputManager.instance.Controls.Player.Fire.started += ctx => OnFireStarted();
         InputManager.instance.Controls.Player.Fire.canceled += ctx => Fire();
-        InputManager.instance.Controls.Player.Special.performed += ctx => Special();
-        charge = baseCharge;
+        InputManager.instance.Controls.Player.ChangeWeapon.performed += ctx => ChangeWeapon();
+
+
+        // Set default weapon.
+        if(weapons.Count != 0)
+        {
+            EquipWeapon(weapons[currentIndex++]);
+        }
     }
 
     void Update()
     {
         PointGun();
-
-        if(charging)
-        {
-            charge += Time.deltaTime;
-        }
-        // Autofire if charge is at max.
-        if(charge >= maxCharge)
-        {
-            Fire();
-        }
-
-        currentCooldown -= Time.deltaTime;
     }
 
     void PointGun()
@@ -72,39 +53,35 @@ public class WeaponController : MonoBehaviour
         }
     }
 
+    void EquipWeapon(GameObject weaponPrefab)
+    {
+        currentWeapon = InstantiateWeaponPrefab(weaponPrefab).GetComponent<IWeapon>();
+    }
+
+    GameObject InstantiateWeaponPrefab(GameObject weaponPrefab)
+    {
+        return Instantiate(weaponPrefab, this.transform.position, this.transform.rotation, this.transform);
+    }
+
     void OnFireStarted()
     {
-        // Throw if carrying, otherwise charge weapon.
-        if(load.GetComponent<LoadManager>().HasLoad()) 
-        {
-            load.GetComponent<LoadManager>().Throw();
-        }
-        else if(currentCooldown < 0)
-        {
-            charging = true;
-        }
+        currentWeapon.OnFireStarted();
     }
 
     void Fire()
     {
-        if(charging)
-        {
-            ShootLaser();
-            charging = false;
-            currentCooldown = cooldown;
-        }
-        charge = baseCharge;
+        currentWeapon.Fire();
     }
 
-    void ShootLaser()
+    void ChangeWeapon()
     {
-        GameObject newLaser = Instantiate(laserPrefab, this.transform.forward + this.transform.position, this.transform.rotation);
-        newLaser.GetComponent<Laser>().StartPoint.GetComponent<Rigidbody>().velocity = this.transform.forward * fireSpeed;
-        newLaser.GetComponent<Laser>().EndPoint.GetComponent<Rigidbody>().velocity = this.transform.forward * fireSpeed;
-
-        // Decrease the degrees of gravitational effect based on weapon charge.
-        newLaser.GetComponent<Laser>().StartPoint.GetComponent<Mass>().Degrees *= 1/charge;
-        newLaser.GetComponent<Laser>().EndPoint.GetComponent<Mass>().Degrees *= 1/charge;
+        currentWeapon.PutAway();
+        // Cycle through weapons.
+        if(weapons.Count <= currentIndex)
+        {
+            currentIndex = 0;
+        }
+        EquipWeapon(weapons[currentIndex++]);
     }
 
     void Special()

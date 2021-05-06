@@ -62,7 +62,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Special",
+                    "name": "ChangeWeapon",
                     "type": "Button",
                     "id": "e35d83cd-76bf-495e-9c57-dec9f1ffaf52",
                     "expectedControlType": "Button",
@@ -243,7 +243,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Special",
+                    "action": "ChangeWeapon",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

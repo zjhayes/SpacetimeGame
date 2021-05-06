@@ -15,7 +15,7 @@ public class Photon : MonoBehaviour
             other.GetComponent<PhotonSensor>().Power();
         }
 
-        if(other.GetComponent<Photon>())
+        if(other.GetComponent<IgnoreInteraction>())
         {
             return; // Ignore other photons.
         }

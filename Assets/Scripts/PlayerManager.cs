@@ -21,8 +21,6 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private GameObject player;
     [SerializeField]
-    private GameObject playerLoad;
-    [SerializeField]
     private float reach = 2.0f;
     private float playerClock = 60;
 
@@ -36,11 +34,6 @@ public class PlayerManager : MonoBehaviour
         get { return player; }
     }
 
-    public GameObject Load
-    {
-        get { return playerLoad; }
-    }
-
     public float Reach
     {
         get { return reach; }
@@ -48,7 +41,6 @@ public class PlayerManager : MonoBehaviour
 
     public float PlayerClock
     {
-        get
-        { return playerClock; }
+        get { return playerClock; }
     }
 }
