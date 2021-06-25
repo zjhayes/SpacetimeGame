@@ -43,13 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38933598c12a44796becab94d3b02e7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  load: {fileID: 0}
   pointSpeed: 0.25
   minRotation: 345
   maxRotation: 360
   weapons:
   - {fileID: 1221512633997643139, guid: e1ac08b2ffd5c4c678d7b9679b6f544f, type: 3}
   - {fileID: 249747527506345950, guid: c1bdb4c518bcd48c5b018b0ba338995b, type: 3}
+  - {fileID: 5793432753336051620, guid: 0893b6a06b3ea4748b20c8371399e5af, type: 3}
 --- !u!1 &7414946409203371556
 GameObject:
   m_ObjectHideFlags: 0
