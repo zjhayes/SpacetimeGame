@@ -412,12 +412,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1111250329}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &50975483 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7414946410014406525, guid: 69f8dee20f45e4706afc24f5f5614d1e,
-    type: 3}
-  m_PrefabInstance: {fileID: 657704919}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &56240805
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2362,7 +2356,7 @@ PrefabInstance:
         type: 3}
       propertyPath: load
       value: 
-      objectReference: {fileID: 50975483}
+      objectReference: {fileID: 0}
     - target: {fileID: 7805869666467296323, guid: 52a59b471e88041138ff2c207dedc8a5,
         type: 3}
       propertyPath: m_Name
@@ -5689,6 +5683,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1642481929, guid: 69f8dee20f45e4706afc24f5f5614d1e, type: 3}
+      propertyPath: weapons.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642481929, guid: 69f8dee20f45e4706afc24f5f5614d1e, type: 3}
+      propertyPath: weapons.Array.data[2]
+      value: 
+      objectReference: {fileID: 5793432753336051620, guid: 0893b6a06b3ea4748b20c8371399e5af,
+        type: 3}
     - target: {fileID: 7414946410818805313, guid: 69f8dee20f45e4706afc24f5f5614d1e,
         type: 3}
       propertyPath: m_LocalPosition.x

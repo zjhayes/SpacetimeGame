@@ -10,7 +10,6 @@ public class Pickup : MonoBehaviour
 
     bool isHolding = false;
     GameObject currentLoad;
-    Vector3 objectPosition;
 
     void Update()
     {
@@ -31,7 +30,7 @@ public class Pickup : MonoBehaviour
     public void PickUp(GameObject load)
     {
         currentLoad = load;
-        this.transform.parent=currentLoad.transform;
+        //this.transform.SetParent(currentLoad.transform);
         this.GetComponent<Rigidbody>().detectCollisions = true;
 
         isHolding = true;
@@ -39,8 +38,8 @@ public class Pickup : MonoBehaviour
 
     public void PutDown()
     {
-        objectPosition = this.transform.position;
-        this.transform.SetParent(null);
+        Vector3 objectPosition = this.transform.position;
+        //this.transform.SetParent(null);
         this.transform.position = objectPosition;
         currentLoad = null;
 

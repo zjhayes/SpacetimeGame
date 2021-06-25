@@ -12,12 +12,9 @@ public class LoadManager : MonoBehaviour
     GameObject currentPickup;
     PlayerInteraction interact;
 
-    bool recentlyThrown = false;
-
     void Start()
     {
         interact = PlayerManager.instance.Player.GetComponent<PlayerInteraction>();
-        interact.onInteract += OnInteract;
     }
 
     void Update()
@@ -30,30 +27,24 @@ public class LoadManager : MonoBehaviour
                 PutDown();
             }
         }
-
-        recentlyThrown = false;
     }
 
-    void OnInteract()
+    public void OnPickUp()
     {
         if(!HasLoad() && interact.HasHit)
         {
             // Check if object being aimed at can be picked up.
             GameObject objectInView = interact.CurrentObject;
-            if(objectInView.GetComponent<Pickup>())
+            if(objectInView.GetComponent<Pickup>() && !PickupTooFar(objectInView))
             {
                 PickUp(objectInView);
             }
 
             // Call interaction event.
-            if(objectInView.GetComponent<Interactable>())
-            {
-                objectInView.GetComponent<Interactable>().Interact();
-            }
-        }
-        else
-        {
-            PutDown();
+            // if(objectInView.GetComponent<Interactable>())
+            // {
+            //     objectInView.GetComponent<Interactable>().Interact();
+            // }
         }
     }
 
@@ -65,8 +56,11 @@ public class LoadManager : MonoBehaviour
 
     public void PutDown()
     {
-        currentPickup.GetComponent<Pickup>().Throw(gameObject, dropForce);
-        currentPickup = null;
+        if(HasLoad())
+        {
+            currentPickup.GetComponent<Pickup>().Throw(gameObject, dropForce);
+            currentPickup = null;
+        }
     }
 
     public void Throw()
@@ -75,7 +69,6 @@ public class LoadManager : MonoBehaviour
         {
             currentPickup.GetComponent<Pickup>().Throw(gameObject, throwForce);
             currentPickup = null;
-            recentlyThrown = true;
         }
     }
 
@@ -96,7 +89,7 @@ public class LoadManager : MonoBehaviour
 
     public bool HasLoad()
     {
-        if((currentPickup == null || !currentPickup.GetComponent<Pickup>().IsHolding))
+        if(currentPickup == null || !currentPickup.GetComponent<Pickup>().IsHolding)
         {
             return false;
         }
@@ -104,11 +97,6 @@ public class LoadManager : MonoBehaviour
         {
             return true;
         }
-    }
-
-    public bool RecentlyThrown()
-    {
-        return recentlyThrown;
     }
 
     public GameObject CurrentPickup
