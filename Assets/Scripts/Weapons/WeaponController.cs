@@ -12,6 +12,8 @@ public class WeaponController : MonoBehaviour
     float maxRotation = 360.0f;
     [SerializeField]
     List<GameObject> weapons;
+    [SerializeField]
+    GameObject flashLight;
     int currentIndex = 0;
     IWeapon currentWeapon;
     PlayerInteraction interact;
@@ -22,6 +24,7 @@ public class WeaponController : MonoBehaviour
         InputManager.instance.Controls.Player.Fire.started += ctx => OnFireStarted();
         InputManager.instance.Controls.Player.Fire.canceled += ctx => Fire();
         InputManager.instance.Controls.Player.ChangeWeapon.performed += ctx => ChangeWeapon();
+        InputManager.instance.Controls.Player.ToggleFlashlight.performed += ctx => ToggleFlashlight();
 
 
         // Set default weapon.
@@ -82,6 +85,11 @@ public class WeaponController : MonoBehaviour
             currentIndex = 0;
         }
         EquipWeapon(weapons[currentIndex++]);
+    }
+
+    void ToggleFlashlight()
+    {
+        flashLight.SetActive(!flashLight.active);
     }
 
     void Special()

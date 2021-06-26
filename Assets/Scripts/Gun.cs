@@ -11,7 +11,7 @@ public class Gun : MonoBehaviour
 
     void Start()
     {
-        InputManager.instance.Controls.Player.Trigger.performed += ctx => Fire();
+        InputManager.instance.Controls.Player.Fire.performed += ctx => Fire();
     }
 
     void Fire()
