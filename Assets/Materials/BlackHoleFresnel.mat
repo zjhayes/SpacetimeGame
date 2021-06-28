@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_BlackHoleDistortionShader
-  m_Shader: {fileID: -6465566751694194690, guid: 8bc452b8f51074ba79d420452015bbe2,
+  m_Name: BlackHoleFresnel
+  m_Shader: {fileID: -6465566751694194690, guid: 56c839a25797a432e8d20305adc028be,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -20,5 +20,7 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs: []
-    m_Floats: []
-    m_Colors: []
+    m_Floats:
+    - Vector1_E360FB3C: 3
+    m_Colors:
+    - Color_6B143068: {r: 10.414978, g: 1.9450976, b: 11.984314, a: 1}
