@@ -1472,7 +1472,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 2077213069}
-  awareDistance: 10
+  awareDistance: 25
   moveSpeed: 5
   navPoints:
   - {fileID: 260261350269180861}
@@ -1480,6 +1480,8 @@ MonoBehaviour:
   - {fileID: 924426387}
   - {fileID: 609339727}
   isPassive: 0
+  searchTime: 5
+  attackRange: 5
 --- !u!1001 &260261350269180860
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -9,13 +9,17 @@ public class EGController : MonoBehaviour
     [SerializeField]
     private Transform model;
     [SerializeField]
-    private float awareDistance = 10f;
+    private float awareDistance = 10.0f;
     [SerializeField]
-    private float moveSpeed = 5f;
+    private float moveSpeed = 5.0f;
     [SerializeField]
     private Transform[] navPoints;
     [SerializeField]
     private bool isPassive;
+    [SerializeField]
+    private float searchTime = 5.0f;
+    [SerializeField]
+    private float attackRange = 5.0f;
 
     State currentState = State.PATROLLING;
     private NavMeshAgent agent;
@@ -25,14 +29,18 @@ public class EGController : MonoBehaviour
     private int destinationPoint = 0;
     private float playerDistance;
     private bool pathBlocked = false;
+    private float currentSearchTime = 0.0f;
 
     readonly float PATROL_POINT_MIN_DISTANCE = 0.5f;
     readonly float NUMBER_OF_RAYS = 24.0f;
+    readonly float SIGHT_OFFSET_BOTTOM = 0.0f;
+    readonly float SIGHT_OFFSET_TOP = 1.0f;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         player = PlayerManager.instance.Player.transform;
+        currentSearchTime = searchTime;
 
         agent.autoBraking = false;
 
@@ -56,18 +64,40 @@ public class EGController : MonoBehaviour
             case(State.ALERT):
                 Pursue();
                 return;
+            case(State.SEARCHING):
+                Search();
+                return;
         }
     }
 
     void Scan()
     {
-        Quaternion startingAngle = Quaternion.AngleAxis(-60, Vector3.up);
-        Quaternion stepAngle = Quaternion.AngleAxis(5, Vector3.up);
+        // Check top and bottom sight lines for player.
+        bool canSeeBottom = CanSeePlayer(SIGHT_OFFSET_BOTTOM, -60, 5);
+        bool canSeeTop = CanSeePlayer(SIGHT_OFFSET_TOP, -40, 3.5f);
+        bool playerInView = canSeeBottom || canSeeTop;
+
+        if(playerInView)
+        {
+            currentState = State.ALERT;
+        }
+        else if(currentState == State.ALERT)
+        {
+            currentState = State.SEARCHING;
+        }
+    }
+
+    // TODO: Remove DebugRays to make more efficient, update OR condition in Scan method.
+    bool CanSeePlayer(float sightOffset, float startAngleOffset, float stepAngleOffset)
+    {
+        Quaternion startingAngle = Quaternion.AngleAxis(startAngleOffset, Vector3.up);
+        Quaternion stepAngle = Quaternion.AngleAxis(stepAngleOffset, Vector3.up);
         Quaternion angle = transform.rotation * startingAngle;
         RaycastHit hit;
         Vector3 position = transform.position;
+        position.y += sightOffset;
         Vector3 forward = angle * Vector3.forward;
-
+        bool playerInView = false;
         for(int i = 0; i < NUMBER_OF_RAYS; i++)
         {
             if(Physics.Raycast(position, forward, out hit, awareDistance))
@@ -76,7 +106,7 @@ public class EGController : MonoBehaviour
                 {
                     Debug.DrawRay(position, forward * hit.distance, Color.red);
                     playerLastPosition = player.transform.position;
-                    currentState = State.ALERT;
+                    playerInView = true;
                 }
                 else
                 {
@@ -89,10 +119,12 @@ public class EGController : MonoBehaviour
             }
             forward = stepAngle * forward;
         }
+        return playerInView;
     }
 
     void Patrol()
     {
+        Move();
         if(agent.remainingDistance < PATROL_POINT_MIN_DISTANCE)
         {
             GotoNextPoint();
@@ -101,15 +133,39 @@ public class EGController : MonoBehaviour
 
     void Pursue()
     {
-        playerDistance = Vector3.Distance(playerLastPosition, transform.position);
+        TargetPlayer();
 
-        //LookAtPlayer();
-        Chase();
-
-        if(playerDistance > awareDistance)
+        // Stop and attack when in range.
+        if(agent.remainingDistance > attackRange)
         {
+            Move();
+        }
+        else
+        {
+            Stop();
+            LookAtPlayer();
+            Attack();
+        }
+    }
+
+    void Search()
+    {
+        if(currentSearchTime > 0f)
+        {
+            // Count down search timer.
+            currentSearchTime -= Time.deltaTime;
+        }
+        else
+        {
+            // Patrol and reset clock.
+            currentSearchTime = searchTime;
             currentState = State.PATROLLING;
         }
+    }
+
+    void Attack()
+    {
+        Debug.Log("EG Attacks " + Time.deltaTime);
     }
 
     void LookAtPlayer()
@@ -121,18 +177,27 @@ public class EGController : MonoBehaviour
     {
         if(navPoints.Length == 0)
         {
+            Debug.Log("No patrol route set. " + gameObject.name);
             return;
         }
         
+        // Set destination to next patrol route point.
         agent.destination = navPoints[destinationPoint].position;
         destinationPoint = (destinationPoint + 1) % navPoints.Length;
     }
-
-    void Chase()
+    void TargetPlayer()
     {
-        playerDistance = Vector3.Distance(player.position, transform.position);
-        //transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
         agent.destination = playerLastPosition;
+    }
+
+    void Move()
+    {
+        agent.isStopped = false;
+    }
+
+    void Stop()
+    {
+        agent.isStopped = true;
     }
 }
 
@@ -141,5 +206,6 @@ public enum State
     PASSIVE,
     PATROLLING,
     ALERT,
+    SEARCHING,
     DEAD
 }
