@@ -33,7 +33,7 @@ public class EGController : MonoBehaviour
 
     readonly float PATROL_POINT_MIN_DISTANCE = 0.5f;
     readonly float NUMBER_OF_RAYS = 24.0f;
-    readonly float SIGHT_OFFSET_BOTTOM = 0.0f;
+    readonly float SIGHT_OFFSET_BOTTOM = -0.5f;
     readonly float SIGHT_OFFSET_TOP = 1.0f;
 
     void Start()
