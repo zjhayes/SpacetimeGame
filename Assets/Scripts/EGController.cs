@@ -17,15 +17,11 @@ public class EGController : MonoBehaviour
     [SerializeField]
     private bool isPassive;
 
-    private float scanDistance = 5.0f;
-    private float scanRadius = 5.0f;
-
-
     State currentState = State.PATROLLING;
     private NavMeshAgent agent;
     private Transform goal;
     private Transform player;
-    private Transform playerLastPosition;
+    private Vector3 playerLastPosition;
     private int destinationPoint = 0;
     private float playerDistance;
     private bool pathBlocked = false;
@@ -74,12 +70,12 @@ public class EGController : MonoBehaviour
 
         for(int i = 0; i < NUMBER_OF_RAYS; i++)
         {
-            if(Physics.Raycast(position, forward, out hit, scanDistance))
+            if(Physics.Raycast(position, forward, out hit, awareDistance))
             {
                 if(hit.collider.tag == "Player")
                 {
                     Debug.DrawRay(position, forward * hit.distance, Color.red);
-                    playerLastPosition = player.transform;
+                    playerLastPosition = player.transform.position;
                     currentState = State.ALERT;
                 }
                 else
@@ -89,7 +85,7 @@ public class EGController : MonoBehaviour
             }
             else
             {
-                Debug.DrawRay(position, forward * scanRadius, Color.white);
+                Debug.DrawRay(position, forward * awareDistance, Color.white);
             }
             forward = stepAngle * forward;
         }
@@ -105,9 +101,9 @@ public class EGController : MonoBehaviour
 
     void Pursue()
     {
-        playerDistance = Vector3.Distance(player.position, transform.position);
+        playerDistance = Vector3.Distance(playerLastPosition, transform.position);
 
-        LookAtPlayer();
+        //LookAtPlayer();
         Chase();
 
         if(playerDistance > awareDistance)
@@ -134,7 +130,9 @@ public class EGController : MonoBehaviour
 
     void Chase()
     {
-        transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+        playerDistance = Vector3.Distance(player.position, transform.position);
+        //transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+        agent.destination = playerLastPosition;
     }
 }
 
