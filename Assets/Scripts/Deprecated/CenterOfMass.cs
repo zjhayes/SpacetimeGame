@@ -6,5 +6,8 @@ public class CenterOfMass : MonoBehaviour
 {
 
     // DEPRECATED
-    
+    void Start()
+    {
+        Debug.Log(gameObject.name + " is using a deprecated script.");
+    }
 }

@@ -5,6 +5,12 @@ public class LadderController : MonoBehaviour
     [SerializeField]
     float maxAngleOfContact = 10.0f;
 
+    void Start()
+    {
+        Debug.Log(gameObject.name + " is using a deprecated script.");
+    }
+
+
     void OnTriggerStay(Collider other)
     {
         if(other.tag == "Player")

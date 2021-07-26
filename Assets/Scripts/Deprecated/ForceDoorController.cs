@@ -7,6 +7,11 @@ public class ForceDoorController : MonoBehaviour
     [SerializeField]
     GameObject powerSource;
 
+    void Start()
+    {
+        Debug.Log(gameObject.name + " is using a deprecated script.");
+    }
+
     void Awake()
     {
         powerSource.GetComponent<Power>().onPowerOn += Open;

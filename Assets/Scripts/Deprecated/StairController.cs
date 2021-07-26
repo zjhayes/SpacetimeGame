@@ -26,6 +26,11 @@ public class StairController : MonoBehaviour
 
     float distance = 0f;
 
+    void Start()
+    {
+        Debug.Log(gameObject.name + " is using a deprecated script.");
+    }
+
     void Awake()
     {
         distance = Vector3.Distance(enabledPosition.transform.position, disabledPosition.transform.position);

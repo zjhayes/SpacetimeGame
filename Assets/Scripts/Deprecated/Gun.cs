@@ -12,6 +12,7 @@ public class Gun : MonoBehaviour
     void Start()
     {
         InputManager.instance.Controls.Player.Fire.performed += ctx => Fire();
+        Debug.Log(gameObject.name + " is using a deprecated script.");
     }
 
     void Fire()
