@@ -19,8 +19,8 @@ public class PlayerMovement : MonoBehaviour
     float moveHorizontal = 0.0f;
     Vector3 moveDirection = Vector3.zero;
     float rotationX = 0;
-
     bool canMove = true;
+    bool cameraControlsEnabled = true;
     bool isJumping = false;
     bool isRunning = false;
     bool isClimbing = false;
@@ -45,16 +45,16 @@ public class PlayerMovement : MonoBehaviour
 
     void LateUpdate()
     {
-        // We are grounded, so recalculate move direction based on axes
+        // Recalculate move direction based on axes
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
-        // Press Left Shift to run
+
         float curSpeedX = canMove ? (isCrouching ? crouchingSpeed : (isRunning ? runningSpeed : walkingSpeed)) * moveVerticle : 0;
         float curSpeedY = canMove ? (isCrouching ? crouchingSpeed : (isRunning ? runningSpeed : walkingSpeed)) * moveHorizontal : 0;
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-        if(isJumping && canMove && characterController.isGrounded)
+        if(isJumping && characterController.isGrounded)
         {
             moveDirection.y = jumpSpeed;
         }
@@ -76,14 +76,17 @@ public class PlayerMovement : MonoBehaviour
             moveDirection.y -= gravity * Time.deltaTime;
         }
 
-        // Move the controller
-        characterController.Move(moveDirection * Time.deltaTime);
+        // Move the player.
+        if(canMove)
+        {
+            characterController.Move(moveDirection * Time.deltaTime);
+        }
 
         // Player and Camera rotation
         float yCameraRotation = InputManager.instance.Controls.Camera.Pitch.ReadValue<float>();
         float xCameraRotation = InputManager.instance.Controls.Camera.Yaw.ReadValue<float>();
 
-        if(canMove)
+        if(cameraControlsEnabled)
         {
             rotationX += -yCameraRotation * lookSpeed;
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
@@ -145,6 +148,12 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerManager.instance.Player.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         }
+    }
+
+    public bool CanMove
+    {
+        get{ return canMove; }
+        set{ canMove = value; }
     }
 
     public bool IsClimbing

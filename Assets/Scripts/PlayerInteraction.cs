@@ -14,8 +14,8 @@ public class PlayerInteraction : MonoBehaviour
     Vector3 currentPoint;
 
 
-    public delegate void OnInteract();
-    public OnInteract onInteract;
+    //public delegate void OnInteract();
+    //public OnInteract onInteract;
 
     void Start()
     {
@@ -59,9 +59,9 @@ public class PlayerInteraction : MonoBehaviour
 
     void Interact()
     {
-        if(onInteract != null)
+        if(currentObject.GetComponent<Interactable>())
         {
-            onInteract.Invoke();
+            currentObject.GetComponent<Interactable>().Interact();
         }
     }
 
