@@ -98,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
             isJumping = false;
         }
 
-        UpdateStance();
+        //UpdateStance();
     }
 
     void OnJump()
@@ -131,11 +131,13 @@ public class PlayerMovement : MonoBehaviour
     void Crouch()
     {
         isCrouching = true;
+        PlayerManager.instance.Player.transform.localScale = new Vector3(1.0f, 0.5f, 1.0f);
     }
 
     void Stand()
     {
         isCrouching = false;
+        PlayerManager.instance.Player.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
     }
 
     void UpdateStance()

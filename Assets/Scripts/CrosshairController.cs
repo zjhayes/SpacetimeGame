@@ -8,7 +8,11 @@ public class CrosshairController : MonoBehaviour
     [SerializeField]
     Color32 defaultColor;
     [SerializeField]
+    Color32 interactColor;
+    [SerializeField]
     Camera fpsCamera;
+    [SerializeField]
+    TooltipController tooltip;
 
     PlayerInteraction interact;
 
@@ -20,11 +24,28 @@ public class CrosshairController : MonoBehaviour
     
     void Update()
     {
+        tooltip.HideTooltip();
+
         // If aiming at object..
         if(interact.HasHit)
         {
             GameObject targetedObject = interact.CurrentObject;
-            // If aiming at a pickup or interactable that's within reach...
+
+            // Show Tooltip
+            if(targetedObject.GetComponent<Tooltip>())
+            {
+                string tooltipText = targetedObject.GetComponent<Tooltip>().TooltipText;
+                tooltip.ShowTooltip(tooltipText);
+            }
+
+            if(targetedObject.GetComponent<Interactable>())
+            {
+                GetComponent<Image>().color = interactColor;
+            }
+            else
+            {
+                GetComponent<Image>().color = defaultColor;
+            }
         }
     }
 }
