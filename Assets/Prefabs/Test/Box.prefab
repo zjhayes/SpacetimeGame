@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1554816719039091275}
   - component: {fileID: 1554816719039091270}
   - component: {fileID: 5975550023473445493}
+  - component: {fileID: 8222845251877012269}
   m_Layer: 0
   m_Name: Box
   m_TagString: Pickup
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f465c45d4f09c465392f9172aa81b152, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -124,7 +125,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f70cb10e46aad4541b077b92197eb108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadCorrectionSpeed: 1
 --- !u!114 &5975550023473445493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554816719039091272}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b99dfb0929349454e8e9aa537898c7de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  degrees: 360
+  useWorldGravity: 1
+  gravityRadius: 4
+  worldGravityDegrees: 90
+--- !u!114 &8222845251877012269
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,7 +151,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1554816719039091272}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b99dfb0929349454e8e9aa537898c7de, type: 3}
+  m_Script: {fileID: 11500000, guid: f35ef9dff6e3c4efdb72a40ae0eb6452, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityRadius: 4
+  centerOfMass: {fileID: 7315321292006631540, guid: 9ddf6fe3ab462479eb527d5ecba3e665,
+    type: 3}
+  mass: 1009.49

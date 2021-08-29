@@ -165,7 +165,7 @@ public class EGController : MonoBehaviour
 
     void Attack()
     {
-        Debug.Log("EG Attacks " + Time.deltaTime);
+        //Debug.Log("EG Attacks " + Time.deltaTime);
     }
 
     void LookAtPlayer()
