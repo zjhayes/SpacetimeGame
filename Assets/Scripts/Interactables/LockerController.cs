@@ -4,6 +4,7 @@ using UnityEngine;
 
 /* Attach controller to locker door. */
 [RequireComponent(typeof(Interactable))]
+[RequireComponent(typeof(Tooltip))]
 public class LockerController : MonoBehaviour
 {
     [SerializeField]
@@ -59,8 +60,8 @@ public class LockerController : MonoBehaviour
         yield return StartCoroutine(UpdateDoorRotation(maxDoorRotation));
         yield return StartCoroutine(UpdatePlayerPosition(exitPosition.transform));
         tooltip.TooltipText = "Hide";
-        yield return StartCoroutine(UpdateDoorRotation(0));
         PausePlayerControls(false);
+        yield return StartCoroutine(UpdateDoorRotation(0));
     }
 
     IEnumerator UpdateDoorRotation(float angle)

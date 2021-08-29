@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Interactable))]
 public class CrosshairController : MonoBehaviour
 {
     [SerializeField]
@@ -31,16 +32,18 @@ public class CrosshairController : MonoBehaviour
         {
             GameObject targetedObject = interact.CurrentObject;
 
-            // Show Tooltip
-            if(targetedObject.GetComponent<Tooltip>())
+            if(targetedObject.GetComponent<Interactable>() && 
+                interact.DistanceToHit() <= targetedObject.GetComponent<Interactable>().MaxDistance)
             {
-                string tooltipText = targetedObject.GetComponent<Tooltip>().TooltipText;
-                tooltip.ShowTooltip(tooltipText);
-            }
-
-            if(targetedObject.GetComponent<Interactable>())
-            {
+                Debug.Log(interact.DistanceToHit());
                 GetComponent<Image>().color = interactColor;
+                
+                // Show Tooltip
+                if(targetedObject.GetComponent<Tooltip>())
+                {
+                    string tooltipText = targetedObject.GetComponent<Tooltip>().TooltipText;
+                    tooltip.ShowTooltip(tooltipText);
+                }
             }
             else
             {

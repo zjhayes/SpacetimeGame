@@ -7,7 +7,7 @@ public class Tooltip : MonoBehaviour
     [SerializeField]
     string tooltipText;
 
-        public string TooltipText
+    public string TooltipText
     {
         get{ return tooltipText; }
         set{ tooltipText = value; }

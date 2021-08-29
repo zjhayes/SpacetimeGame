@@ -59,7 +59,8 @@ public class PlayerInteraction : MonoBehaviour
 
     void Interact()
     {
-        if(currentObject.GetComponent<Interactable>())
+        if(currentObject.GetComponent<Interactable>() && 
+                DistanceToHit() <= currentObject.GetComponent<Interactable>().MaxDistance)
         {
             currentObject.GetComponent<Interactable>().Interact();
         }
