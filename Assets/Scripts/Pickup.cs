@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// For objects that can be carried with Lift Buddy.
 [RequireComponent(typeof(Rigidbody))]
 public class Pickup : MonoBehaviour
 {

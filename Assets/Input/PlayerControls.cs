@@ -67,17 +67,25 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Trigger"",
+                    ""name"": ""ChangeWeapon"",
                     ""type"": ""Button"",
-                    ""id"": ""cf935487-d7c3-4782-97f6-548c064d79a0"",
+                    ""id"": ""e35d83cd-76bf-495e-9c57-dec9f1ffaf52"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""ChangeWeapon"",
+                    ""name"": ""Crouch"",
                     ""type"": ""Button"",
-                    ""id"": ""e35d83cd-76bf-495e-9c57-dec9f1ffaf52"",
+                    ""id"": ""33eef2f5-462f-4869-8e73-bb8c656073b1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ToggleFlashlight"",
+                    ""type"": ""Button"",
+                    ""id"": ""02d12b0b-3f0f-4a2f-8f1f-ffb94cd155d0"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -142,7 +150,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""5823b726-ba70-40d8-871c-a3b3e4cc85b3"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -175,7 +183,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b542f3ff-f998-4e88-b043-fa4a1d28519f"",
-                    ""path"": ""<Keyboard>/leftShift"",
+                    ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -240,23 +248,34 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""379173be-f5d2-4a03-8af3-e9857495f693"",
-                    ""path"": ""<Keyboard>/r"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Trigger"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""498b1138-ee56-487f-b245-63f143d20d89"",
                     ""path"": ""<Keyboard>/g"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ChangeWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""304ae64a-7fb6-47cb-8ecf-2cc9cf7087e9"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""11407797-6dbf-4e5b-94c9-808697b6e9ca"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleFlashlight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -341,8 +360,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
-        m_Player_Trigger = m_Player.FindAction("Trigger", throwIfNotFound: true);
         m_Player_ChangeWeapon = m_Player.FindAction("ChangeWeapon", throwIfNotFound: true);
+        m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
+        m_Player_ToggleFlashlight = m_Player.FindAction("ToggleFlashlight", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_Pitch = m_Camera.FindAction("Pitch", throwIfNotFound: true);
@@ -402,8 +422,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Run;
     private readonly InputAction m_Player_Look;
-    private readonly InputAction m_Player_Trigger;
     private readonly InputAction m_Player_ChangeWeapon;
+    private readonly InputAction m_Player_Crouch;
+    private readonly InputAction m_Player_ToggleFlashlight;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -414,8 +435,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Run => m_Wrapper.m_Player_Run;
         public InputAction @Look => m_Wrapper.m_Player_Look;
-        public InputAction @Trigger => m_Wrapper.m_Player_Trigger;
         public InputAction @ChangeWeapon => m_Wrapper.m_Player_ChangeWeapon;
+        public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
+        public InputAction @ToggleFlashlight => m_Wrapper.m_Player_ToggleFlashlight;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -443,12 +465,15 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Look.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
                 @Look.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
                 @Look.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
-                @Trigger.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTrigger;
-                @Trigger.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTrigger;
-                @Trigger.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTrigger;
                 @ChangeWeapon.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeWeapon;
                 @ChangeWeapon.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeWeapon;
                 @ChangeWeapon.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeWeapon;
+                @Crouch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
+                @Crouch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
+                @Crouch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
+                @ToggleFlashlight.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleFlashlight;
+                @ToggleFlashlight.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleFlashlight;
+                @ToggleFlashlight.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleFlashlight;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -471,12 +496,15 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
-                @Trigger.started += instance.OnTrigger;
-                @Trigger.performed += instance.OnTrigger;
-                @Trigger.canceled += instance.OnTrigger;
                 @ChangeWeapon.started += instance.OnChangeWeapon;
                 @ChangeWeapon.performed += instance.OnChangeWeapon;
                 @ChangeWeapon.canceled += instance.OnChangeWeapon;
+                @Crouch.started += instance.OnCrouch;
+                @Crouch.performed += instance.OnCrouch;
+                @Crouch.canceled += instance.OnCrouch;
+                @ToggleFlashlight.started += instance.OnToggleFlashlight;
+                @ToggleFlashlight.performed += instance.OnToggleFlashlight;
+                @ToggleFlashlight.canceled += instance.OnToggleFlashlight;
             }
         }
     }
@@ -530,8 +558,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
-        void OnTrigger(InputAction.CallbackContext context);
         void OnChangeWeapon(InputAction.CallbackContext context);
+        void OnCrouch(InputAction.CallbackContext context);
+        void OnToggleFlashlight(InputAction.CallbackContext context);
     }
     public interface ICameraActions
     {

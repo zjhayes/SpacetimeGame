@@ -54,17 +54,25 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Trigger",
+                    "name": "ChangeWeapon",
                     "type": "Button",
-                    "id": "cf935487-d7c3-4782-97f6-548c064d79a0",
+                    "id": "e35d83cd-76bf-495e-9c57-dec9f1ffaf52",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
                 {
-                    "name": "ChangeWeapon",
+                    "name": "Crouch",
                     "type": "Button",
-                    "id": "e35d83cd-76bf-495e-9c57-dec9f1ffaf52",
+                    "id": "33eef2f5-462f-4869-8e73-bb8c656073b1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ToggleFlashlight",
+                    "type": "Button",
+                    "id": "02d12b0b-3f0f-4a2f-8f1f-ffb94cd155d0",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -129,7 +137,7 @@
                 {
                     "name": "",
                     "id": "5823b726-ba70-40d8-871c-a3b3e4cc85b3",
-                    "path": "<Keyboard>/e",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -162,7 +170,7 @@
                 {
                     "name": "",
                     "id": "b542f3ff-f998-4e88-b043-fa4a1d28519f",
-                    "path": "<Keyboard>/leftShift",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -227,23 +235,34 @@
                 },
                 {
                     "name": "",
-                    "id": "379173be-f5d2-4a03-8af3-e9857495f693",
-                    "path": "<Keyboard>/r",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Trigger",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "498b1138-ee56-487f-b245-63f143d20d89",
                     "path": "<Keyboard>/g",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "ChangeWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "304ae64a-7fb6-47cb-8ecf-2cc9cf7087e9",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "11407797-6dbf-4e5b-94c9-808697b6e9ca",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleFlashlight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
